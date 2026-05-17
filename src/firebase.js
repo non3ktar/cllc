@@ -6,19 +6,19 @@ let firebaseApp = null;
 let firestoreDb = null;
 let auth = null;
 
-// 1. Tenta buscar credenciais das variáveis de ambiente (.env do Vite)
-const envConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID
+// 1. Configuração Fixa (Embutida no código-fonte para acesso imediato dos estudantes)
+const fixedConfig = {
+  apiKey: "AIzaSyDbfVyatzjMcs7FOZppCQpmCKDCUfeImE8",
+  authDomain: "cllc-40be0.firebaseapp.com",
+  projectId: "cllc-40be0",
+  storageBucket: "cllc-40be0.firebasestorage.app",
+  messagingSenderId: "847588898824",
+  appId: "1:847588898824:web:1342d445f0fde8ef6a79bd"
 };
 
-const hasEnvConfig = envConfig.apiKey && envConfig.projectId;
+const hasFixedConfig = fixedConfig.apiKey && fixedConfig.projectId;
 
-// 2. Tenta buscar credenciais salvas dinamicamente no navegador (inseridas pelo Professor no Painel)
+// 2. Tenta buscar credenciais salvas dinamicamente no navegador
 const getSavedConfig = () => {
   try {
     const saved = localStorage.getItem('cllc_firebase_config');
@@ -28,7 +28,7 @@ const getSavedConfig = () => {
   }
 };
 
-const activeConfig = hasEnvConfig ? envConfig : getSavedConfig();
+const activeConfig = hasFixedConfig ? fixedConfig : getSavedConfig();
 
 // 3. Inicializa o Firebase se houver alguma configuração válida
 if (activeConfig && activeConfig.apiKey && activeConfig.projectId) {
