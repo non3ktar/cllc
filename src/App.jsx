@@ -1093,21 +1093,7 @@ export default function App() {
                                 </button>
                               )}
 
-                              {/* Baixar EPUB (Drive ou Local) */}
-                              {(localEpub || driveEpubId) && (
-                                <button 
-                                  onClick={() => logBookAccess(book, 'Download (EPUB)').then(logged => {
-                                    if (logged !== false) {
-                                      const url = localEpub ? `${import.meta.env.BASE_URL}livros/${encodeURIComponent(localEpub)}` : `https://drive.google.com/file/d/${driveEpubId}/view?usp=drivesdk`;
-                                      window.open(url, '_blank', 'noopener,noreferrer');
-                                    }
-                                  })}
-                                  className="flex-1 min-w-[90px] py-1.5 rounded-lg bg-amber-600 text-white hover:bg-amber-500 text-[10px] font-bold transition-all flex items-center justify-center gap-1 border border-amber-500/20 text-center"
-                                  title={localEpub ? "Baixar livro local em formato EPUB" : "Acessar livro em formato EPUB no Google Drive"}
-                                >
-                                  📥 Baixar EPUB
-                                </button>
-                              )}
+
                               
                               {/* Ouvir Audiobook MP3 ou TTS Fallback */}
                               {meta?.audioUrl ? (
