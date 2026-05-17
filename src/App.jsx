@@ -769,16 +769,7 @@ export default function App() {
                                 </button>
                               )}
 
-                              {/* Ler PDF Local (Offline-First) */}
-                              {localPdf && (
-                                <button 
-                                  onClick={() => setReadingBookDrive({ ...book, localUrl: `/livros/${encodeURIComponent(localPdf)}` })}
-                                  className="flex-1 min-w-[90px] py-1.5 rounded-lg bg-emerald-600 text-white hover:bg-emerald-500 text-[10px] font-bold transition-all flex items-center justify-center gap-1 border border-emerald-500/20"
-                                  title="Ler PDF local offline"
-                                >
-                                  <BookOpen className="w-3.5 h-3.5" /> Ler Local (PDF)
-                                </button>
-                              )}
+
 
                               {/* Baixar EPUB (Drive ou Local) */}
                               {(localEpub || driveEpubId) && (
