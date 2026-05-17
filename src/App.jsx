@@ -17,7 +17,7 @@ import {
   CheckCircle2, ChevronRight, FileText, Settings, 
   Heart, Sparkles, Clipboard, Volume2, VolumeX,
   Play, Pause, SkipForward, FastForward, RotateCcw, X, Cloud, CloudOff, Globe,
-  Eye
+  Eye, Activity
 } from 'lucide-react';
 
 export default function App() {
@@ -73,6 +73,17 @@ export default function App() {
   const [localPasscode, setLocalPasscode] = useState('');
   const [loginError, setLoginError] = useState('');
 
+  // --- Estados de Perfil do Estudante e Logs ---
+  const [studentProfileName, setStudentProfileName] = useState(localStorage.getItem('cllc_student_name') || '');
+  const [studentProfileGrade, setStudentProfileGrade] = useState(localStorage.getItem('cllc_student_grade') || '');
+  const [showProfileModal, setShowProfileModal] = useState(false);
+  const [pendingAction, setPendingAction] = useState(null);
+  const [tempProfileName, setTempProfileName] = useState('');
+  const [tempProfileGrade, setTempProfileGrade] = useState('6º');
+  const [accessFilterSearch, setAccessFilterSearch] = useState('');
+  const [accessFilterGrade, setAccessFilterGrade] = useState('');
+  const [accessFilterType, setAccessFilterType] = useState('');
+
   // Alertas temporários
   const [toast, setToast] = useState(null);
 
@@ -85,6 +96,7 @@ export default function App() {
   const reviews = useLiveQuery(() => db.reviews.toArray()) || [];
   const progressList = useLiveQuery(() => db.progress.toArray()) || [];
   const booksMetaList = useLiveQuery(() => db.booksMeta.toArray()) || [];
+  const accessLogsList = useLiveQuery(() => db.accessLogs.toArray()) || [];
 
   // Mapeamentos práticos de dados locais
   const progressMap = useMemo(() => {
@@ -102,6 +114,38 @@ export default function App() {
     });
     return map;
   }, [booksMetaList]);
+
+  const filteredAccessLogs = useMemo(() => {
+    return accessLogsList
+      .filter(log => {
+        const matchesSearch = !accessFilterSearch.trim() || 
+          log.studentName.toLowerCase().includes(accessFilterSearch.toLowerCase()) || 
+          log.bookTitle.toLowerCase().includes(accessFilterSearch.toLowerCase());
+        const matchesGrade = !accessFilterGrade || log.studentGrade === accessFilterGrade;
+        const matchesType = !accessFilterType || log.accessType === accessFilterType;
+        return matchesSearch && matchesGrade && matchesType;
+      })
+      .sort((a, b) => b.timestamp - a.timestamp);
+  }, [accessLogsList, accessFilterSearch, accessFilterGrade, accessFilterType]);
+
+  // --- ESTATÍSTICAS DE ACESSO AOS LIVROS ---
+  const mostActiveGrade = useMemo(() => {
+    if (accessLogsList.length === 0) return 'Nenhum';
+    const counts = {};
+    accessLogsList.forEach(log => {
+      counts[log.studentGrade] = (counts[log.studentGrade] || 0) + 1;
+    });
+    return Object.entries(counts).reduce((a, b) => a[1] > b[1] ? a : b)[0] + ' Ano';
+  }, [accessLogsList]);
+
+  const mostAccessedBook = useMemo(() => {
+    if (accessLogsList.length === 0) return 'Nenhum';
+    const counts = {};
+    accessLogsList.forEach(log => {
+      counts[log.bookTitle] = (counts[log.bookTitle] || 0) + 1;
+    });
+    return Object.entries(counts).reduce((a, b) => a[1] > b[1] ? a : b)[0];
+  }, [accessLogsList]);
 
   // --- SINCRONIZAÇÃO EM TEMPO REAL COM FIREBASE (FIRESTORE) ---
   useEffect(() => {
@@ -138,9 +182,24 @@ export default function App() {
       });
     });
 
+    // 3. Sincronizar Logs de Acesso do Firestore para o Dexie
+    const unsubscribeAccessLogs = onSnapshot(collection(firestoreDb, 'accessLogs'), (snapshot) => {
+      const remoteLogs = [];
+      snapshot.forEach((doc) => {
+        remoteLogs.push({ id: doc.id, ...doc.data() });
+      });
+      
+      db.accessLogs.clear().then(() => {
+        db.accessLogs.bulkPut(remoteLogs);
+      });
+    }, (error) => {
+      console.error("Erro no sync de logs de acesso:", error);
+    });
+
     return () => {
       unsubscribeReviews();
       unsubscribeMeta();
+      unsubscribeAccessLogs();
     };
   }, [firebaseConnected]);
 
@@ -188,11 +247,15 @@ export default function App() {
     // Parar qualquer TTS ativo
     handleStopSpeak();
     
-    setAudioBook(book);
-    setAudioPlaying(true);
-    setAudioCurrentTime(0);
-    setAudioSpeed(1);
-    triggerToast(`Iniciando audiolivro: ${book.title} 🎧`);
+    logBookAccess(book, 'Audiobook').then((logged) => {
+      if (logged !== false) {
+        setAudioBook(book);
+        setAudioPlaying(true);
+        setAudioCurrentTime(0);
+        setAudioSpeed(1);
+        triggerToast(`Iniciando audiolivro: ${book.title} 🎧`);
+      }
+    });
   };
 
   const handleTogglePlayAudio = () => {
@@ -528,6 +591,113 @@ export default function App() {
     }
   };
 
+  // --- GERENCIAMENTO DE PERFIL DO ESTUDANTE E LOGS DE ACESSO ---
+  const handleOpenEditProfile = () => {
+    setTempProfileName(studentProfileName);
+    setTempProfileGrade(studentProfileGrade || '6º');
+    setPendingAction(null);
+    setShowProfileModal(true);
+  };
+
+  const handleSaveProfile = (e) => {
+    e.preventDefault();
+    if (!tempProfileName.trim()) {
+      triggerToast('Por favor, digite seu nome completo.');
+      return;
+    }
+
+    const name = tempProfileName.trim();
+    const grade = tempProfileGrade;
+
+    localStorage.setItem('cllc_student_name', name);
+    localStorage.setItem('cllc_student_grade', grade);
+
+    setStudentProfileName(name);
+    setStudentProfileGrade(grade);
+    setShowProfileModal(false);
+
+    triggerToast(`Olá, ${name}! Seu perfil de leitura foi salvo! 👤`);
+
+    // Se houver uma ação pendente (leitura, download, audiobook), executa-a agora!
+    if (pendingAction) {
+      const { book, accessType } = pendingAction;
+      setPendingAction(null);
+      
+      logBookAccessDirect(book, accessType, name, grade).then((logged) => {
+        if (logged) {
+          if (accessType === 'Leitura (Drive)') {
+            const drivePdfId = book.driveId || booksMetaMap[book.id]?.driveId;
+            setReadingBookDrive({ ...book, driveId: drivePdfId });
+          } else if (accessType === 'Download (EPUB)') {
+            const localEpub = book.files?.find(f => f.toLowerCase().endsWith('.epub'));
+            const driveEpubId = book.driveEpubId;
+            const url = localEpub ? `/livros/${encodeURIComponent(localEpub)}` : `https://drive.google.com/file/d/${driveEpubId}/view?usp=drivesdk`;
+            window.open(url, '_blank', 'noopener,noreferrer');
+          } else if (accessType === 'Audiobook') {
+            const audioId = book.audioId || booksMetaMap[book.id]?.audioUrl;
+            setAudioBook({
+              ...book,
+              audioUrl: book.audioUrl || `https://drive.google.com/file/d/${audioId}/view?usp=drivesdk`
+            });
+            setAudioPlaying(true);
+          }
+        }
+      });
+    }
+  };
+
+  const logBookAccessDirect = async (book, accessType, name, grade) => {
+    const logEntry = {
+      bookId: book.id,
+      bookTitle: book.title,
+      studentName: name,
+      studentGrade: grade,
+      accessType: accessType,
+      timestamp: Date.now()
+    };
+
+    try {
+      await db.accessLogs.add(logEntry);
+      if (isFirebaseActive() && firestoreDb) {
+        await addDoc(collection(firestoreDb, 'accessLogs'), logEntry);
+      }
+      return true;
+    } catch (e) {
+      console.error(e);
+      return false;
+    }
+  };
+
+  const logBookAccess = async (book, accessType) => {
+    if (!studentProfileName || !studentProfileGrade) {
+      setTempProfileName('');
+      setTempProfileGrade('6º');
+      setPendingAction({ book, accessType });
+      setShowProfileModal(true);
+      return false;
+    }
+
+    const logEntry = {
+      bookId: book.id,
+      bookTitle: book.title,
+      studentName: studentProfileName,
+      studentGrade: studentProfileGrade,
+      accessType: accessType,
+      timestamp: Date.now()
+    };
+
+    try {
+      await db.accessLogs.add(logEntry);
+      if (isFirebaseActive() && firestoreDb) {
+        await addDoc(collection(firestoreDb, 'accessLogs'), logEntry);
+      }
+      return true;
+    } catch (e) {
+      console.error(e);
+      return false;
+    }
+  };
+
   // Exportar dados locais
   const handleExportData = () => {
     const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(
@@ -649,19 +819,42 @@ export default function App() {
             </p>
           </div>
           
-          <div className="flex bg-gray-900/60 p-1.5 rounded-xl border border-gray-800 self-start md:self-center">
-            <button 
-              onClick={() => setActiveTab('estudante')}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all ${activeTab === 'estudante' ? 'bg-gradient-to-r from-accentBlue to-accentPurple text-white shadow-md' : 'text-gray-400 hover:text-white'}`}
-            >
-              <User className="w-4 h-4" /> Painel do Estudante
-            </button>
-            <button 
-              onClick={() => setActiveTab('professor')}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all ${activeTab === 'professor' ? 'bg-gradient-to-r from-accentBlue to-accentPurple text-white shadow-md' : 'text-gray-400 hover:text-white'}`}
-            >
-              <Settings className="w-4 h-4" /> Área do Professor
-            </button>
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 self-start md:self-center">
+            {/* Badge de Identificação do Perfil do Aluno */}
+            {activeTab === 'estudante' && (
+              <button 
+                onClick={handleOpenEditProfile}
+                className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-gray-900/80 hover:bg-gray-800/80 border border-gray-800 hover:border-accentBlue/30 transition-all text-xs font-semibold text-white shadow-inner"
+                title="Editar seus dados de leitor"
+              >
+                <div className="w-5 h-5 rounded-full bg-accentBlue/20 flex items-center justify-center text-accentBlue">
+                  <User className="w-3 h-3" />
+                </div>
+                <span>
+                  {studentProfileName ? (
+                    <>Olá, <strong className="text-accentBlue">{studentProfileName}</strong> <span className="text-[10px] text-accentPurple bg-accentPurple/10 px-1.5 py-0.5 rounded border border-accentPurple/25 font-bold ml-1">{studentProfileGrade} Ano</span></>
+                  ) : (
+                    <span className="text-gray-400 italic">👤 Identificar-se (Gravar Leitura)</span>
+                  )}
+                </span>
+                <span className="text-gray-500 hover:text-white ml-0.5">✎</span>
+              </button>
+            )}
+
+            <div className="flex bg-gray-900/60 p-1.5 rounded-xl border border-gray-800">
+              <button 
+                onClick={() => setActiveTab('estudante')}
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all ${activeTab === 'estudante' ? 'bg-gradient-to-r from-accentBlue to-accentPurple text-white shadow-md' : 'text-gray-400 hover:text-white'}`}
+              >
+                <User className="w-4 h-4" /> Painel do Estudante
+              </button>
+              <button 
+                onClick={() => setActiveTab('professor')}
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all ${activeTab === 'professor' ? 'bg-gradient-to-r from-accentBlue to-accentPurple text-white shadow-md' : 'text-gray-400 hover:text-white'}`}
+              >
+                <Settings className="w-4 h-4" /> Área do Professor
+              </button>
+            </div>
           </div>
         </div>
       </header>
@@ -846,7 +1039,11 @@ export default function App() {
                               {/* Ler no Google Drive */}
                               {drivePdfId && (
                                 <button 
-                                  onClick={() => setReadingBookDrive({ ...book, driveId: drivePdfId })}
+                                  onClick={() => logBookAccess(book, 'Leitura (Drive)').then(logged => {
+                                    if (logged !== false) {
+                                      setReadingBookDrive({ ...book, driveId: drivePdfId });
+                                    }
+                                  })}
                                   className="flex-1 min-w-[90px] py-1.5 rounded-lg bg-accentBlue text-white hover:bg-fuchsia-300 hover:text-gray-950 text-[10px] font-bold transition-all flex items-center justify-center gap-1 border border-accentBlue/20"
                                   title="Ler livro online via Google Drive"
                                 >
@@ -854,20 +1051,20 @@ export default function App() {
                                 </button>
                               )}
 
-
-
                               {/* Baixar EPUB (Drive ou Local) */}
                               {(localEpub || driveEpubId) && (
-                                <a 
-                                  href={localEpub ? `/livros/${encodeURIComponent(localEpub)}` : `https://drive.google.com/file/d/${driveEpubId}/view?usp=drivesdk`}
-                                  download={localEpub ? localEpub : undefined}
-                                  target={localEpub ? undefined : "_blank"}
-                                  rel={localEpub ? undefined : "noopener noreferrer"}
+                                <button 
+                                  onClick={() => logBookAccess(book, 'Download (EPUB)').then(logged => {
+                                    if (logged !== false) {
+                                      const url = localEpub ? `/livros/${encodeURIComponent(localEpub)}` : `https://drive.google.com/file/d/${driveEpubId}/view?usp=drivesdk`;
+                                      window.open(url, '_blank', 'noopener,noreferrer');
+                                    }
+                                  })}
                                   className="flex-1 min-w-[90px] py-1.5 rounded-lg bg-amber-600 text-white hover:bg-amber-500 text-[10px] font-bold transition-all flex items-center justify-center gap-1 border border-amber-500/20 text-center"
                                   title={localEpub ? "Baixar livro local em formato EPUB" : "Acessar livro em formato EPUB no Google Drive"}
                                 >
                                   📥 Baixar EPUB
-                                </a>
+                                </button>
                               )}
                               
                               {/* Ouvir Audiobook MP3 ou TTS Fallback */}
@@ -1218,6 +1415,148 @@ export default function App() {
               </div>
             </div>
 
+            {/* --- RELATÓRIO DE PARTICIPAÇÃO E ACESSOS --- */}
+            <div className="glass-panel p-6 rounded-2xl" onClick={(e) => e.stopPropagation()}>
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-gray-800 mb-6">
+                <div>
+                  <h2 className="text-xl font-bold text-white flex items-center gap-2 m-0">
+                    <Activity className="w-5 h-5 text-accentBlue" /> Registro de Participação e Acessos
+                  </h2>
+                  <p className="text-gray-400 text-xs mt-1">
+                    Acompanhe em tempo real quais estudantes estão abrindo os livros no Drive, baixando os EPUBs ou escutando os áudios.
+                  </p>
+                </div>
+                <div className="flex gap-3">
+                  <button
+                    onClick={handleClearAccessLogs}
+                    className="px-3.5 py-2 rounded-xl bg-rose-500/10 text-rose-400 text-xs font-bold border border-rose-500/20 hover:bg-rose-500 hover:text-white transition-all flex items-center gap-1.5"
+                  >
+                    <Trash2 className="w-4 h-4" /> Limpar Histórico
+                  </button>
+                </div>
+              </div>
+
+              {/* Estatísticas de Acesso */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div className="bg-gray-950/40 p-4 rounded-xl border border-gray-800/60 shadow-inner">
+                  <span className="text-[10px] uppercase text-gray-400 tracking-wider font-bold block">Total de Cliques / Leituras</span>
+                  <h4 className="text-2xl font-extrabold text-white mt-1">
+                    {accessLogsList.length} acessos
+                  </h4>
+                </div>
+                <div className="bg-gray-950/40 p-4 rounded-xl border border-gray-800/60 shadow-inner">
+                  <span className="text-[10px] uppercase text-gray-400 tracking-wider font-bold block">Turma Mais Ativa</span>
+                  <h4 className="text-2xl font-extrabold text-accentPurple mt-1">
+                    {mostActiveGrade}
+                  </h4>
+                </div>
+                <div className="bg-gray-950/40 p-4 rounded-xl border border-gray-800/60 shadow-inner">
+                  <span className="text-[10px] uppercase text-gray-400 tracking-wider font-bold block">Obra Mais Acessada</span>
+                  <h4 className="text-lg font-extrabold text-accentBlue mt-1 truncate" title={mostAccessedBook}>
+                    {mostAccessedBook}
+                  </h4>
+                </div>
+              </div>
+
+              {/* Controles de Filtro */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6 bg-gray-950/20 p-4 rounded-xl border border-gray-800/40">
+                <div>
+                  <label className="text-[10px] uppercase font-bold text-gray-400 tracking-wider block mb-1.5">Buscar Aluno ou Obra</label>
+                  <input 
+                    type="text"
+                    value={accessFilterSearch}
+                    onChange={(e) => setAccessFilterSearch(e.target.value)}
+                    placeholder="Digitar nome ou livro..."
+                    className="w-full px-3 py-1.5 rounded-lg bg-gray-950/80 border border-gray-800 text-xs text-white focus:outline-none focus:border-accentBlue/50 transition-all placeholder-gray-600"
+                  />
+                </div>
+                <div>
+                  <label className="text-[10px] uppercase font-bold text-gray-400 tracking-wider block mb-1.5">Filtrar por Turma</label>
+                  <select
+                    value={accessFilterGrade}
+                    onChange={(e) => setAccessFilterGrade(e.target.value)}
+                    className="w-full px-3 py-1.5 rounded-lg bg-gray-950/80 border border-gray-800 text-xs text-white focus:outline-none focus:border-accentBlue/50 transition-all cursor-pointer"
+                  >
+                    <option value="">Todas as Turmas</option>
+                    <option value="6º">6º Ano</option>
+                    <option value="7º">7º Ano</option>
+                    <option value="8º">8º Ano</option>
+                    <option value="9º">9º Ano</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="text-[10px] uppercase font-bold text-gray-400 tracking-wider block mb-1.5">Filtrar por Ação</label>
+                  <select
+                    value={accessFilterType}
+                    onChange={(e) => setAccessFilterType(e.target.value)}
+                    className="w-full px-3 py-1.5 rounded-lg bg-gray-950/80 border border-gray-800 text-xs text-white focus:outline-none focus:border-accentBlue/50 transition-all cursor-pointer"
+                  >
+                    <option value="">Todas as Ações</option>
+                    <option value="Leitura (Drive)">Leitura (Drive)</option>
+                    <option value="Download (EPUB)">Download (EPUB)</option>
+                    <option value="Audiobook">Audiobook</option>
+                  </select>
+                </div>
+              </div>
+
+              {filteredAccessLogs.length === 0 ? (
+                <div className="bg-gray-950/20 border border-gray-800/40 p-12 text-center rounded-xl text-gray-400 text-xs italic">
+                  Nenhum registro de acesso corresponde aos filtros aplicados.
+                </div>
+              ) : (
+                <div className="overflow-x-auto rounded-xl border border-gray-800/40 bg-gray-950/20">
+                  <table className="w-full text-left text-xs border-collapse">
+                    <thead>
+                      <tr className="border-b border-gray-800 text-gray-400 uppercase tracking-wider font-semibold bg-gray-950/40">
+                        <th className="py-3 px-4">Estudante</th>
+                        <th className="py-3 px-4">Série / Ano</th>
+                        <th className="py-3 px-4">Obra / Livro</th>
+                        <th className="py-3 px-4">Ação Realizada</th>
+                        <th className="py-3 px-4 text-right">Data & Hora</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {filteredAccessLogs.map((log, index) => {
+                        let badgeStyle = '';
+                        if (log.accessType === 'Leitura (Drive)') {
+                          badgeStyle = 'bg-accentBlue/20 text-accentBlue border-accentBlue/30';
+                        } else if (log.accessType === 'Download (EPUB)') {
+                          badgeStyle = 'bg-amber-500/20 text-amber-300 border-amber-500/30';
+                        } else {
+                          badgeStyle = 'bg-accentPurple/20 text-accentPurple border-accentPurple/30';
+                        }
+
+                        return (
+                          <tr key={log.id || index} className="border-b border-gray-800/30 hover:bg-gray-900/20 transition-colors">
+                            <td className="py-3 px-4 font-bold text-white">{log.studentName}</td>
+                            <td className="py-3 px-4">
+                              <span className="text-[10px] text-accentPurple font-bold bg-accentPurple/10 px-2 py-0.5 rounded border border-accentPurple/25">
+                                {log.studentGrade} Ano
+                              </span>
+                            </td>
+                            <td className="py-3 px-4 font-semibold text-gray-200">{log.bookTitle}</td>
+                            <td className="py-3 px-4">
+                              <span className={`text-[10px] font-bold px-2 py-0.5 rounded border ${badgeStyle}`}>
+                                {log.accessType}
+                              </span>
+                            </td>
+                            <td className="py-3 px-4 text-right text-gray-400">
+                              {new Date(log.timestamp).toLocaleString('pt-BR', {
+                                day: '2-digit',
+                                month: '2-digit',
+                                hour: '2-digit',
+                                minute: '2-digit'
+                              })}
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
+
             {/* --- LISTAGEM GERAL DE RESENHAS DO PROFESSOR --- */}
             <div className="glass-panel p-6 rounded-2xl">
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-gray-800 mb-6">
@@ -1325,6 +1664,73 @@ export default function App() {
       {/* ======================================= */}
       {/* === MODAL: FICHA DE LEITURA (ESTUDANTE) === */}
       {/* ======================================= */}
+      {/* ======================================= */}
+      {/* === MODAL: IDENTIFICAÇÃO DO LEITOR (ESTUDANTE) === */}
+      {/* ======================================= */}
+      {showProfileModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-gray-950/80 backdrop-blur-sm animate-fade-in" onClick={() => setShowProfileModal(false)}>
+          <div 
+            className="w-full max-w-md glass-panel rounded-3xl overflow-hidden shadow-2xl border border-gray-800/80 p-8 relative"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="absolute top-[-20%] left-[-20%] w-[60%] h-[60%] rounded-full bg-accentBlue/10 blur-[80px]" />
+            <div className="absolute bottom-[-20%] right-[-20%] w-[60%] h-[60%] rounded-full bg-accentPurple/10 blur-[80px]" />
+
+            <div className="text-center mb-6 relative">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-accentBlue to-accentPurple flex items-center justify-center mx-auto mb-3 shadow-lg shadow-accentBlue/20">
+                <User className="w-6 h-6 text-white" />
+              </div>
+              <h3 className="text-lg font-bold text-white leading-tight">Identificação do Estudante</h3>
+              <p className="text-gray-400 text-xs mt-1">Registre seus dados para salvar sua leitura no relatório do professor</p>
+            </div>
+
+            <form onSubmit={handleSaveProfile} className="space-y-5 relative">
+              <div>
+                <label className="text-[10px] uppercase font-bold text-gray-400 tracking-wider block mb-1.5">Seu Nome Completo</label>
+                <input 
+                  type="text"
+                  required
+                  value={tempProfileName}
+                  onChange={(e) => setTempProfileName(e.target.value)}
+                  placeholder="Ex: João Silva Santos"
+                  className="w-full px-4 py-2.5 rounded-xl bg-gray-950/80 border border-gray-800 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-accentBlue/50 transition-colors animate-pulse-slow"
+                />
+              </div>
+
+              <div>
+                <label className="text-[10px] uppercase font-bold text-gray-400 tracking-wider block mb-1.5">Sua Série / Ano</label>
+                <select
+                  value={tempProfileGrade}
+                  onChange={(e) => setTempProfileGrade(e.target.value)}
+                  className="w-full px-4 py-2.5 rounded-xl bg-gray-950/80 border border-gray-800 text-sm text-white focus:outline-none focus:border-accentBlue/50 transition-colors cursor-pointer"
+                >
+                  <option value="6º">6º Ano</option>
+                  <option value="7º">7º Ano</option>
+                  <option value="8º">8º Ano</option>
+                  <option value="9º">9º Ano</option>
+                </select>
+              </div>
+
+              <div className="pt-2 flex gap-3">
+                <button
+                  type="button"
+                  onClick={() => setShowProfileModal(false)}
+                  className="flex-1 py-2.5 rounded-xl bg-gray-900 hover:bg-gray-800 border border-gray-800 text-gray-400 hover:text-white text-xs font-bold transition-all"
+                >
+                  Cancelar
+                </button>
+                <button 
+                  type="submit"
+                  className="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-accentBlue to-accentPurple text-white text-xs font-bold hover:opacity-90 transition-all flex items-center justify-center gap-1.5 shadow-lg shadow-accentBlue/20"
+                >
+                  💾 Salvar Perfil
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
       {selectedBook && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-gray-950/80 backdrop-blur-sm animate-fade-in">
           <div className="w-full max-w-2xl glass-panel rounded-3xl overflow-hidden shadow-2xl border border-gray-800/80 flex flex-col max-h-[90vh]">
