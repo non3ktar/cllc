@@ -696,6 +696,8 @@ export default function App() {
                   const prog = progressMap[book.id];
                   const meta = booksMetaMap[book.id];
                   const hasReview = reviews.some(r => r.bookId === book.id);
+                  const localPdf = book.files?.find(f => f.toLowerCase().endsWith('.pdf'));
+                  const localEpub = book.files?.find(f => f.toLowerCase().endsWith('.epub'));
                   
                   return (
                     <div 
@@ -723,8 +725,8 @@ export default function App() {
                           <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-gray-900/60 text-gray-300 border border-gray-800">
                             {book.genre}
                           </span>
-                          {meta?.driveId && (
-                            <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-accentBlue/10 text-accentBlue border border-accentBlue/20 flex items-center gap-1">
+                          {(meta?.driveId || (localPdf && book.driveIds?.[localPdf]) || (localEpub && book.driveIds?.[localEpub])) && (
+                            <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-accentBlue/10 text-accentBlue border border-accentBlue/20 flex items-center gap-1" title="Disponível para leitura em nuvem via Google Drive">
                               📖 Livro em Nuvem
                             </span>
                           )}
@@ -751,15 +753,15 @@ export default function App() {
                         
                         {/* Controles de Leitura Digital e Escuta Rápida */}
                         {(() => {
-                          const localPdf = book.files?.find(f => f.toLowerCase().endsWith('.pdf'));
-                          const localEpub = book.files?.find(f => f.toLowerCase().endsWith('.epub'));
+                          const drivePdfId = meta?.driveId || (localPdf && book.driveIds?.[localPdf]);
+                          const driveEpubId = localEpub && book.driveIds?.[localEpub];
                           
                           return (
                             <div className="flex flex-wrap gap-2 mb-3" onClick={(e) => e.stopPropagation()}>
                               {/* Ler no Google Drive */}
-                              {meta?.driveId && (
+                              {drivePdfId && (
                                 <button 
-                                  onClick={() => setReadingBookDrive({ ...book, driveId: meta.driveId })}
+                                  onClick={() => setReadingBookDrive({ ...book, driveId: drivePdfId })}
                                   className="flex-1 min-w-[90px] py-1.5 rounded-lg bg-accentBlue text-white hover:bg-fuchsia-300 hover:text-gray-950 text-[10px] font-bold transition-all flex items-center justify-center gap-1 border border-accentBlue/20"
                                   title="Ler livro online via Google Drive"
                                 >
@@ -778,13 +780,15 @@ export default function App() {
                                 </button>
                               )}
 
-                              {/* Baixar EPUB Local (Offline-First) */}
-                              {localEpub && (
+                              {/* Baixar EPUB (Drive ou Local) */}
+                              {(localEpub || driveEpubId) && (
                                 <a 
-                                  href={`/livros/${encodeURIComponent(localEpub)}`}
-                                  download={localEpub}
+                                  href={localEpub ? `/livros/${encodeURIComponent(localEpub)}` : `https://drive.google.com/file/d/${driveEpubId}/view?usp=drivesdk`}
+                                  download={localEpub ? localEpub : undefined}
+                                  target={localEpub ? undefined : "_blank"}
+                                  rel={localEpub ? undefined : "noopener noreferrer"}
                                   className="flex-1 min-w-[90px] py-1.5 rounded-lg bg-amber-600 text-white hover:bg-amber-500 text-[10px] font-bold transition-all flex items-center justify-center gap-1 border border-amber-500/20 text-center"
-                                  title="Baixar livro em formato EPUB"
+                                  title={localEpub ? "Baixar livro local em formato EPUB" : "Acessar livro em formato EPUB no Google Drive"}
                                 >
                                   📥 Baixar EPUB
                                 </a>

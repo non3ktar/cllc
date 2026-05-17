@@ -9,7 +9,11 @@ export const booksData = [
       "o_saci_-_monteiro_lobato.pdf"
     ],
     "genre": "Folclore Brasileiro",
-    "focus": "Resgate cultural, oralidade, elementos do imaginário popular nacional. Excelente para iniciar contação de histórias."
+    "focus": "Resgate cultural, oralidade, elementos do imaginário popular nacional. Excelente para iniciar contação de histórias.",
+    "driveIds": {
+      "o_saci_-_monteiro_lobato__1_.epub": "1kU-5AQparQjypC-eGnZPtU31I2twluE9",
+      "o_saci_-_monteiro_lobato.pdf": "1hI8NrXrgFDgW60HsoYB7cBvCbgR5YYHw"
+    }
   },
   {
     "id": 2,
@@ -29,7 +33,10 @@ export const booksData = [
       "fc3a1bulasdeesopo2ed.pdf"
     ],
     "genre": "Fábula Clássica",
-    "focus": "Estrutura narrativa curta, moralidade e metáforas sobre o comportamento humano."
+    "focus": "Estrutura narrativa curta, moralidade e metáforas sobre o comportamento humano.",
+    "driveIds": {
+      "fc3a1bulasdeesopo2ed.pdf": "1SApOi_7pg9KLj0P_ZxRL42VZjSScIEE1"
+    }
   },
   {
     "id": 4,
@@ -40,7 +47,10 @@ export const booksData = [
       "fabulas.pdf"
     ],
     "genre": "Fábula / Poesia",
-    "focus": "Comparação entre retextualizações clássicas e estudo da rima e métrica simples."
+    "focus": "Comparação entre retextualizações clássicas e estudo da rima e métrica simples.",
+    "driveIds": {
+      "fabulas.pdf": "1RwWDkzNxVAE2Y0XwSEC7EdSLW4oyGPb6"
+    }
   },
   {
     "id": 5,
@@ -51,7 +61,10 @@ export const booksData = [
       "0002b-a-maravilhosa-terra-de-OZ-L_Frank_Baum-DaoP.epub"
     ],
     "genre": "Literatura Fantástica",
-    "focus": "Jornada de amadurecimento, amizade, descoberta do mundo e superação de medos."
+    "focus": "Jornada de amadurecimento, amizade, descoberta do mundo e superação de medos.",
+    "driveIds": {
+      "0002b-a-maravilhosa-terra-de-OZ-L_Frank_Baum-DaoP.epub": "1VD2f4mz9SMWMMgMhc02x5OLCsFruD4ms"
+    }
   },
   {
     "id": 6,
@@ -63,7 +76,11 @@ export const booksData = [
       "alicep.pdf"
     ],
     "genre": "Fantasia / Nonsense",
-    "focus": "Brincadeira linguística, imaginação, lógica reversa. Excelente para oficinas de produção textual livre."
+    "focus": "Brincadeira linguística, imaginação, lógica reversa. Excelente para oficinas de produção textual livre.",
+    "driveIds": {
+      "0004a-Alice-no-pais-das-maravilha-Lewis_Carroll-DaoP.epub": "12A2paVB89vQSrDXYeGsA6gEDYXRwg3Gy",
+      "alicep.pdf": "1yoUIVDb9sYzaYspcM-F2PnOYWI8nM8K8"
+    }
   },
   {
     "id": 7,
@@ -75,7 +92,11 @@ export const booksData = [
       "0001-O_Livro_da_selva-Rudyard_Kipling-DaoP.epub"
     ],
     "genre": "Aventura / Natureza",
-    "focus": "Relação homem-natureza, senso de comunidade, lealdade e regras de convivência."
+    "focus": "Relação homem-natureza, senso de comunidade, lealdade e regras de convivência.",
+    "driveIds": {
+      "0001-O_livro_da_selva-Rudyard_Kipling_Mojo-DaoP.pdf": "1JSi5Heqr2gEQ7n3Dft0FgvPv1fO2PsAQ",
+      "0001-O_Livro_da_selva-Rudyard_Kipling-DaoP.epub": "1_sJdftFrSlxV1NvlMZUer_AV3MrqTTt2"
+    }
   },
   {
     "id": 8,
@@ -86,7 +107,10 @@ export const booksData = [
       "O Gigante Egoísta - Oscar Wilde.pdf"
     ],
     "genre": "Conto Formativo",
-    "focus": "Altruísmo, generosidade e a importância da partilha. Leitura emocionante e rápida."
+    "focus": "Altruísmo, generosidade e a importância da partilha. Leitura emocionante e rápida.",
+    "driveIds": {
+      "O Gigante Egoísta - Oscar Wilde.pdf": "1iiybewu8wvLjIqIx_Kn5G6qA5MM3O3b7"
+    }
   },
   {
     "id": 9,
@@ -97,7 +121,10 @@ export const booksData = [
       "O Rouxinol e a Rosa - Oscar Wilde.pdf"
     ],
     "genre": "Conto Poético",
-    "focus": "Amor, sacrifício, materialismo vs. sentimentos. Permite trabalhar a sensibilidade poética em prosa."
+    "focus": "Amor, sacrifício, materialismo vs. sentimentos. Permite trabalhar a sensibilidade poética em prosa.",
+    "driveIds": {
+      "O Rouxinol e a Rosa - Oscar Wilde.pdf": "1DnnDHaNMVdwwdwKgY64zR3_dyzpZiMcp"
+    }
   },
   {
     "id": 10,
@@ -109,7 +136,11 @@ export const booksData = [
       "o_chapÉu_encantado_-_free_books_-_charles_torquet_2.epub"
     ],
     "genre": "Fantasia Leve",
-    "focus": "Estudo de elementos de mistério leve e humor na literatura infanto-juvenil."
+    "focus": "Estudo de elementos de mistério leve e humor na literatura infanto-juvenil.",
+    "driveIds": {
+      "o_chapÉu_encantado_-_free_books_-_charles_torquet_2.pdf": "1NpqNSxCiYXu3PhKHpRlhSPbtxG-6wPcf",
+      "o_chapÉu_encantado_-_free_books_-_charles_torquet_2.epub": "1r49jqVGY4mlN2rBACpwt7pZj5967yqL7"
+    }
   },
   {
     "id": 11,
@@ -120,7 +151,10 @@ export const booksData = [
       "As Aventuras de Tom Sawyer - Mark Twain.pdf"
     ],
     "genre": "Aventura / Infância",
-    "focus": "Liberdade, rebeldia saudável, humor e a vida comunitária no interior. Ótimo para debate sobre \"o que é ser jovem\"."
+    "focus": "Liberdade, rebeldia saudável, humor e a vida comunitária no interior. Ótimo para debate sobre \"o que é ser jovem\".",
+    "driveIds": {
+      "As Aventuras de Tom Sawyer - Mark Twain.pdf": "14wGBDXVDalndgO2HB0ZoXPU4KEiF0tCq"
+    }
   },
   {
     "id": 12,
@@ -131,7 +165,10 @@ export const booksData = [
       "As Aventuras de Huckleberry Finn - Mark Twain.pdf"
     ],
     "genre": "Aventura / Crítica Social",
-    "focus": "Amizade além das diferenças, preconceito racial e ética pessoal versus leis injustas."
+    "focus": "Amizade além das diferenças, preconceito racial e ética pessoal versus leis injustas.",
+    "driveIds": {
+      "As Aventuras de Huckleberry Finn - Mark Twain.pdf": "1sEtzt8lVU1bEFkFhJfRtJVxxGI4tS7Mr"
+    }
   },
   {
     "id": 13,
@@ -142,7 +179,10 @@ export const booksData = [
       "A Volta ao Mundo em Oitenta Dias – Júlio Verne.epub"
     ],
     "genre": "Aventura Geográfica",
-    "focus": "Noções de tempo, espaço, globalização no séc. XIX e o choque cultural positivo."
+    "focus": "Noções de tempo, espaço, globalização no séc. XIX e o choque cultural positivo.",
+    "driveIds": {
+      "A Volta ao Mundo em Oitenta Dias – Júlio Verne.epub": "1eD5dyUGaNssTpc5hEDb9qe-Mjt3tZ_67"
+    }
   },
   {
     "id": 14,
@@ -154,7 +194,11 @@ export const booksData = [
       "Viagem ao Centro da Terra - Júlio Verne.epub"
     ],
     "genre": "Ficção Científica / Aventura",
-    "focus": "Introdução à paleontologia e geologia imaginativas; exploração do desconhecido."
+    "focus": "Introdução à paleontologia e geologia imaginativas; exploração do desconhecido.",
+    "driveIds": {
+      "Viagem ao Centro da Terra - Júlio Verne.pdf": "1NKDv15EVyJMk188uJkg0TqYnF1l8PbgE",
+      "Viagem ao Centro da Terra - Júlio Verne.epub": "1BY4PtBM3IpkOXFsj9MJ3Rl7mDg6XN7Yb"
+    }
   },
   {
     "id": 15,
@@ -166,7 +210,11 @@ export const booksData = [
       "Vinte Mil Léguas Submarinas - Júlio Verne.pdf"
     ],
     "genre": "Ficção Científica",
-    "focus": "Engenharia imaginativa, isolamento, mistério oceânico e o enigmático Capitão Nemo."
+    "focus": "Engenharia imaginativa, isolamento, mistério oceânico e o enigmático Capitão Nemo.",
+    "driveIds": {
+      "Vinte Mil Léguas Submarinas - Júlio Verne.epub": "1pNBQHFfZvxng5g3Qu_-s4aIVcDjXFsej",
+      "Vinte Mil Léguas Submarinas - Júlio Verne.pdf": "1dMUXhVIEnbBgXrfH9muV7aKdogdUN8fl"
+    }
   },
   {
     "id": 16,
@@ -178,7 +226,11 @@ export const booksData = [
       "A Ilha Misteriosa – Júlio Verne.epub"
     ],
     "genre": "Sobrevivência / Aventura",
-    "focus": "Aplicação da ciência e do trabalho em equipe para superar adversidades na natureza."
+    "focus": "Aplicação da ciência e do trabalho em equipe para superar adversidades na natureza.",
+    "driveIds": {
+      "A Ilha Misteriosa – Júlio Verne.pdf": "1g_JM9YOivq8e9EkRNjm0qu1H68PtdzeW",
+      "A Ilha Misteriosa – Júlio Verne.epub": "1GJ0ff6c4BqnI5i_6BFS7gFlQzp4DQKLG"
+    }
   },
   {
     "id": 17,
@@ -189,7 +241,10 @@ export const booksData = [
       "O Dia de um Jornalista Americano no ano 2889 - Júlio Verne.pdf"
     ],
     "genre": "Crônica Futurista",
-    "focus": "Visão de futuro, tecnologia, meios de comunicação e ficção científica curta."
+    "focus": "Visão de futuro, tecnologia, meios de comunicação e ficção científica curta.",
+    "driveIds": {
+      "O Dia de um Jornalista Americano no ano 2889 - Júlio Verne.pdf": "1b-6gqQnNFhCO-2P0VkKGt7T4SJsZCF6K"
+    }
   },
   {
     "id": 18,
@@ -201,7 +256,11 @@ export const booksData = [
       "0006_IDT_BILINGUE.epub"
     ],
     "genre": "Aventura / Piratas",
-    "focus": "Formação do caráter, dualidade (o carismático vilão Long John Silver) e amadurecimento."
+    "focus": "Formação do caráter, dualidade (o carismático vilão Long John Silver) e amadurecimento.",
+    "driveIds": {
+      "0006_IDT_BILINGUE.pdf": "1-H_I93BUTNwtxsAKewFThcMLX1htDeZ5",
+      "0006_IDT_BILINGUE.epub": "1MD-x5d9BoUes_QzJ6g9rNBGRu22CZjEu"
+    }
   },
   {
     "id": 19,
@@ -213,7 +272,11 @@ export const booksData = [
       "O Fantasma de Canterville - Oscar Wilde.epub"
     ],
     "genre": "Humor Gótico",
-    "focus": "Sátira aos clichês de terror, choque cultural entre a tradição inglesa e o pragmatismo americano."
+    "focus": "Sátira aos clichês de terror, choque cultural entre a tradição inglesa e o pragmatismo americano.",
+    "driveIds": {
+      "O Fantasma de Canterville - Oscar Wilde.pdf": "1Ahh5-KK0AnfpJSMDUdg2jZ2ipdg8sZvj",
+      "O Fantasma de Canterville - Oscar Wilde.epub": "1hjUrVdVI9PX1iQ0Cpb4G1Lm3OEutSmhP"
+    }
   },
   {
     "id": 20,
@@ -224,7 +287,10 @@ export const booksData = [
       "Microsoft Word - Contos_de_natal_3_para_pdf.doc.pdf"
     ],
     "genre": "Conto Social",
-    "focus": "Empatia, solidariedade e reflexão sobre a desigualdade social nas festividades de fim de ano."
+    "focus": "Empatia, solidariedade e reflexão sobre a desigualdade social nas festividades de fim de ano.",
+    "driveIds": {
+      "Microsoft Word - Contos_de_natal_3_para_pdf.doc.pdf": "11dOWwaP5qEqa5t3ZkGDrc4wnp3PlMsTY"
+    }
   },
   {
     "id": 21,
@@ -235,7 +301,10 @@ export const booksData = [
       "omundoperdido.pdf"
     ],
     "genre": "Aventura Científica",
-    "focus": "Dinossauros, exploração e o espírito científico do início do século XX."
+    "focus": "Dinossauros, exploração e o espírito científico do início do século XX.",
+    "driveIds": {
+      "omundoperdido.pdf": "13OrtCrWXiyNb8wMGy4uNJGk2fcC7sn8k"
+    }
   },
   {
     "id": 22,
@@ -246,7 +315,10 @@ export const booksData = [
       "3574Sherlock-Holmes-0bra-Completa.pdf"
     ],
     "genre": "Policial / Mistério",
-    "focus": "Lógica dedutiva, atenção aos detalhes, raciocínio hipotético. Perfeito para projetos de \"júri simulado\" ou jogos de mistério em sala."
+    "focus": "Lógica dedutiva, atenção aos detalhes, raciocínio hipotético. Perfeito para projetos de \"júri simulado\" ou jogos de mistério em sala.",
+    "driveIds": {
+      "3574Sherlock-Holmes-0bra-Completa.pdf": "1nf1SRawlLDMFFDc9G64-WZgP4406heis"
+    }
   },
   {
     "id": 23,
@@ -257,7 +329,10 @@ export const booksData = [
       "O Diário de Anne Frank - Anne Frank.pdf"
     ],
     "genre": "Biografia / Histórico",
-    "focus": "Segunda Guerra Mundial, empatia, direitos humanos, autodescoberta e resiliência. Conexão profunda com História."
+    "focus": "Segunda Guerra Mundial, empatia, direitos humanos, autodescoberta e resiliência. Conexão profunda com História.",
+    "driveIds": {
+      "O Diário de Anne Frank - Anne Frank.pdf": "1ale20K_Fr7F4afwqvGVA0W005BBB-hAq"
+    }
   },
   {
     "id": 24,
@@ -268,7 +343,10 @@ export const booksData = [
       "Robinson Crusoé - Daniel Dafoe.pdf"
     ],
     "genre": "Aventura / Solidão",
-    "focus": "Sobrevivência, colonialismo, engenhosidade humana e relação com o \"Outro\" (Sexta-Feira)."
+    "focus": "Sobrevivência, colonialismo, engenhosidade humana e relação com o \"Outro\" (Sexta-Feira).",
+    "driveIds": {
+      "Robinson Crusoé - Daniel Dafoe.pdf": "18M7V9ofb_nnRcdBNzoYq6cUQb1umIHkY"
+    }
   },
   {
     "id": 25,
@@ -279,7 +357,10 @@ export const booksData = [
       "A Guerra dos Mundos - H. G. Wells.pdf"
     ],
     "genre": "Ficção Científica / Invasão",
-    "focus": "O medo do desconhecido, imperialismo, ciência e a pequenez da humanidade diante do cosmos."
+    "focus": "O medo do desconhecido, imperialismo, ciência e a pequenez da humanidade diante do cosmos.",
+    "driveIds": {
+      "A Guerra dos Mundos - H. G. Wells.pdf": "1aLIkc7kJ-rltt5V6CBLWI9OXXCbt_Hgm"
+    }
   },
   {
     "id": 26,
@@ -290,7 +371,10 @@ export const booksData = [
       "A Máquina do Tempo - H. G. Wells.pdf"
     ],
     "genre": "Ficção Científica",
-    "focus": "Crítica social disfarçada em viagem no tempo (Eloi e Morlocks). Excelente para debates sobre divisão de classes."
+    "focus": "Crítica social disfarçada em viagem no tempo (Eloi e Morlocks). Excelente para debates sobre divisão de classes.",
+    "driveIds": {
+      "A Máquina do Tempo - H. G. Wells.pdf": "1y6OewF_jgGcg7SFZR_Ech4rThJpZJlCn"
+    }
   },
   {
     "id": 27,
@@ -301,7 +385,10 @@ export const booksData = [
       "O Homem Invisível - H. G. Wells.pdf"
     ],
     "genre": "Ficção Científica / Ética",
-    "focus": "O poder absoluto corrompe? Discussão filosófica profunda sobre ética, invisibilidade e responsabilidade moral."
+    "focus": "O poder absoluto corrompe? Discussão filosófica profunda sobre ética, invisibilidade e responsabilidade moral.",
+    "driveIds": {
+      "O Homem Invisível - H. G. Wells.pdf": "1NWZWnd9CH4OOGDDP5rLw2hu26tghfn8B"
+    }
   },
   {
     "id": 28,
@@ -324,7 +411,11 @@ export const booksData = [
       "Frankenstein - Mary Shelley.pdf"
     ],
     "genre": "Ficção Científica / Gótico",
-    "focus": "Limites da ciência, rejeição social, preconceito pela aparência e a solidão da criatura."
+    "focus": "Limites da ciência, rejeição social, preconceito pela aparência e a solidão da criatura.",
+    "driveIds": {
+      "Frankenstein ou o Prometeu Moderno - Mary Shelley.epub": "1URLQuIh7ZId6jkvs8vmmZkP7gTfOzbyz",
+      "Frankenstein - Mary Shelley.pdf": "1gzdZAnBAsbf_z3_dxrvDL96jLed-38Hz"
+    }
   },
   {
     "id": 30,
@@ -335,7 +426,10 @@ export const booksData = [
       "O Fantasma da Ópera - Gaston Leroux.pdf"
     ],
     "genre": "Romance Gótico",
-    "focus": "Obsessão, arte (música), beleza física vs. deformidade e paixão trágica."
+    "focus": "Obsessão, arte (música), beleza física vs. deformidade e paixão trágica.",
+    "driveIds": {
+      "O Fantasma da Ópera - Gaston Leroux.pdf": "1hABniIm2LzjE0thqDn8_FFIjNvKae_Ob"
+    }
   },
   {
     "id": 31,
@@ -347,7 +441,11 @@ export const booksData = [
       "Sonho De Uma Noite De Verão - William Shakespeare.pdf"
     ],
     "genre": "Teatro (Comédia)",
-    "focus": "Introdução ao teatro clássico através do humor, enganos amorosos e seres fantásticos (Puck)."
+    "focus": "Introdução ao teatro clássico através do humor, enganos amorosos e seres fantásticos (Puck).",
+    "driveIds": {
+      "Sonho De Uma Noite De Verão - William Shakespeare.epub": "11lbnWk9R1N6tK93K-yB8_Gob54FwuP_D",
+      "Sonho De Uma Noite De Verão - William Shakespeare.pdf": "1Suauyhv8xELxe2-Vlfx2VV-A1Wop2H-c"
+    }
   },
   {
     "id": 32,
@@ -358,7 +456,10 @@ export const booksData = [
       "megera.pdf"
     ],
     "genre": "Teatro (Comédia)",
-    "focus": "Discussão histórica sobre papéis de gênero, patriarcado e evolução das relações sociais (leitura crítica)."
+    "focus": "Discussão histórica sobre papéis de gênero, patriarcado e evolução das relações sociais (leitura crítica).",
+    "driveIds": {
+      "megera.pdf": "1Fv5Di-TYNS5IDMyR-ecHv_CKAytW_7wJ"
+    }
   },
   {
     "id": 33,
@@ -369,7 +470,10 @@ export const booksData = [
       "Os Miseraveis - Victor Hugo.pdf"
     ],
     "genre": "Drama Social / Épico",
-    "focus": "Justiça vs. lei, redenção (Jean Valjean), desigualdade social, amor filial. Fundamental para a formação cidadã."
+    "focus": "Justiça vs. lei, redenção (Jean Valjean), desigualdade social, amor filial. Fundamental para a formação cidadã.",
+    "driveIds": {
+      "Os Miseraveis - Victor Hugo.pdf": "1kZtq6YUQSG7yULPxQMbKOn7_HQcRrYZS"
+    }
   },
   {
     "id": 34,
@@ -380,7 +484,10 @@ export const booksData = [
       "O Conde de Monte Cristo - Alexandre Dumas.pdf"
     ],
     "genre": "Romance de Vingança",
-    "focus": "Vingança vs. justiça divina, paciência, lealdade e superação das injustiças. Narrativa altamente envolvente."
+    "focus": "Vingança vs. justiça divina, paciência, lealdade e superação das injustiças. Narrativa altamente envolvente.",
+    "driveIds": {
+      "O Conde de Monte Cristo - Alexandre Dumas.pdf": "1QfTApV6qyoLbHIxfd5QpPy0RjcIGycp4"
+    }
   },
   {
     "id": 35,
@@ -391,7 +498,10 @@ export const booksData = [
       "Os Escravos - Castro Alves.pdf"
     ],
     "genre": "Poesia Abolicionista",
-    "focus": "O \"Poeta dos Escravos\", lírica engajada, denúncia histórica da escravidão. Essencial para projetos de História e Literatura Afro-Brasileira."
+    "focus": "O \"Poeta dos Escravos\", lírica engajada, denúncia histórica da escravidão. Essencial para projetos de História e Literatura Afro-Brasileira.",
+    "driveIds": {
+      "Os Escravos - Castro Alves.pdf": "1syFDZDKguS5kR2XhyAfjjkFE3-rgQWpd"
+    }
   },
   {
     "id": 36,
@@ -402,7 +512,10 @@ export const booksData = [
       "file___C__cdpub_cecilia_pdf_cecilia.html.pdf"
     ],
     "genre": "Poesia Intimista",
-    "focus": "Sensibilidade, efemeridade da vida, a musicalidade do verso e o eu-lírico na poesia moderna brasileira."
+    "focus": "Sensibilidade, efemeridade da vida, a musicalidade do verso e o eu-lírico na poesia moderna brasileira.",
+    "driveIds": {
+      "file___C__cdpub_cecilia_pdf_cecilia.html.pdf": "1y68l66COyJ0Xw-A2ERITWkZucAb8Xvra"
+    }
   },
   {
     "id": 37,
@@ -414,7 +527,11 @@ export const booksData = [
       "Alma Inquieta - Olavo Bilac.pdf"
     ],
     "genre": "Poesia Parnasiana",
-    "focus": "Perfeição formal, estética literária do final do séc. XIX e início do XX no Brasil."
+    "focus": "Perfeição formal, estética literária do final do séc. XIX e início do XX no Brasil.",
+    "driveIds": {
+      "Alma Inquieta - Olavo Bilac.epub": "1OtWer_3EGxDvXBHjBI64HU22trAOHXJb",
+      "Alma Inquieta - Olavo Bilac.pdf": "1luJExhy9402TSGfu89E_EwjrX2W_pK0H"
+    }
   },
   {
     "id": 38,
@@ -426,7 +543,11 @@ export const booksData = [
       "o_mendigo_-_maupassant.pdf"
     ],
     "genre": "Conto Realista / Social",
-    "focus": "A invisibilidade do idoso e do pobre na sociedade, abandono e indiferença humana."
+    "focus": "A invisibilidade do idoso e do pobre na sociedade, abandono e indiferença humana.",
+    "driveIds": {
+      "o-mendigo-maupassant.epub": "10kuJzdrOp2Meou3i0-eSWk90utHfrJ_0",
+      "o_mendigo_-_maupassant.pdf": "1bokE098SxON68kvfmOFOIBd699q8QCBx"
+    }
   },
   {
     "id": 39,
@@ -437,7 +558,10 @@ export const booksData = [
       "O Gato Preto - Edgar Allan Poe.pdf"
     ],
     "genre": "Conto de Terror",
-    "focus": "Culpa, declínio psicológico, crueldade e o fantástico sobrenatural."
+    "focus": "Culpa, declínio psicológico, crueldade e o fantástico sobrenatural.",
+    "driveIds": {
+      "O Gato Preto - Edgar Allan Poe.pdf": "1lOQ2sQSxao2iyo48bW3U-3u6xy_koo6v"
+    }
   },
   {
     "id": 40,
@@ -448,7 +572,10 @@ export const booksData = [
       "O Corvo - Edgar Allan Poe.pdf"
     ],
     "genre": "Poema Gótico",
-    "focus": "Melancolia, luto permanente e a obsessão da perda (\"Nunca mais\"). Análise de ritmo e sonoridade."
+    "focus": "Melancolia, luto permanente e a obsessão da perda (\"Nunca mais\"). Análise de ritmo e sonoridade.",
+    "driveIds": {
+      "O Corvo - Edgar Allan Poe.pdf": "1Ae6bnTX6hjplAHea76xCIRGFoTHjGBhz"
+    }
   },
   {
     "id": 41,
@@ -460,7 +587,11 @@ export const booksData = [
       "Annabel Lee - Egdar Allan Poe.pdf"
     ],
     "genre": "Poema de Amor Gótico",
-    "focus": "Amor eterno além da morte, lirismo suave e melancólico."
+    "focus": "Amor eterno além da morte, lirismo suave e melancólico.",
+    "driveIds": {
+      "Annabel Lee - Egdar Allan Poe.epub": "1ap4l969h2vyqGjQ6lucSMq2sYHC22X2e",
+      "Annabel Lee - Egdar Allan Poe.pdf": "1c4UIudy0sVWwqLyDoF7Ig88_XFurPb8N"
+    }
   },
   {
     "id": 42,
@@ -472,7 +603,11 @@ export const booksData = [
       "O Retrato Oval - Edgar Allan Poe.epub"
     ],
     "genre": "Conto Gótico",
-    "focus": "A relação entre arte e vida, a obsessão artística que consome o ser amado."
+    "focus": "A relação entre arte e vida, a obsessão artística que consome o ser amado.",
+    "driveIds": {
+      "O Retrato Oval - Edgar Allan Poe.pdf": "17KbNkbNazaxlDsVVFUFFflC29-PQ7FbU",
+      "O Retrato Oval - Edgar Allan Poe.epub": "1qOEIw8SPssM0y70TyiYai9U6lCEZwo6V"
+    }
   },
   {
     "id": 43,
@@ -484,7 +619,11 @@ export const booksData = [
       "A Queda da Casa de Usher - Edgar Allan Poe.epub"
     ],
     "genre": "Terror Gótico",
-    "focus": "Decadência familiar, atmosfera opressiva, loucura e a conexão entre a mente e o ambiente físico."
+    "focus": "Decadência familiar, atmosfera opressiva, loucura e a conexão entre a mente e o ambiente físico.",
+    "driveIds": {
+      "A Queda da Casa de Usher - Edgar Allan Poe.pdf": "1icdaM8e8MwVbpaP8NxHAntH2OGqqwnuv",
+      "A Queda da Casa de Usher - Edgar Allan Poe.epub": "19K73ykAvTwFJkSYcrN7CyFzpee4-wLeN"
+    }
   },
   {
     "id": 44,
@@ -495,7 +634,10 @@ export const booksData = [
       "Contos - Edgar Allan Poe.pdf"
     ],
     "genre": "Mistério / Terror",
-    "focus": "Coletânea ideal para oficinas de escrita de suspense e terror psicológico no 8º ano."
+    "focus": "Coletânea ideal para oficinas de escrita de suspense e terror psicológico no 8º ano.",
+    "driveIds": {
+      "Contos - Edgar Allan Poe.pdf": "1pBcVRm0ntfSIWVT6i8qBjidxMEv1bW5_"
+    }
   },
   {
     "id": 45,
@@ -507,7 +649,11 @@ export const booksData = [
       "A Metamorfose – Franz Kafka.pdf"
     ],
     "genre": "Existencialismo / Absurdo",
-    "focus": "Alienação do trabalho, desumanização, a sensação de ser um fardo familiar. Fantástica ponte para debates socioeconômicos."
+    "focus": "Alienação do trabalho, desumanização, a sensação de ser um fardo familiar. Fantástica ponte para debates socioeconômicos.",
+    "driveIds": {
+      "A Metamorfose – Franz Kafka.epub": "1vVHKwf6zxxpvEHl6yMqc-1bQGZQPkXWI",
+      "A Metamorfose – Franz Kafka.pdf": "1g6_w1kbIcCS_OlkEf4HWCTWiXKJCW0Cl"
+    }
   },
   {
     "id": 46,
@@ -519,7 +665,11 @@ export const booksData = [
       "O Processo - Franz Kafka.pdf"
     ],
     "genre": "Distopia Burocrática",
-    "focus": "Crítica ao sistema judiciário irracional, à burocracia estatal e à impotência do indivíduo perante a instituição."
+    "focus": "Crítica ao sistema judiciário irracional, à burocracia estatal e à impotência do indivíduo perante a instituição.",
+    "driveIds": {
+      "O Processo - Franz Kafka.epub": "1SzkmMT3i4TpJowB0PeUlK0nWI3HcIEo6",
+      "O Processo - Franz Kafka.pdf": "18oyRCwoDzisy-JJO3slZKnydTaqyd9CS"
+    }
   },
   {
     "id": 47,
@@ -530,7 +680,10 @@ export const booksData = [
       "o-castelo-franz-kafka.pdf"
     ],
     "genre": "Existencialismo",
-    "focus": "A busca infindável por aprovação e pertencimento em uma sociedade incompreensível e distante."
+    "focus": "A busca infindável por aprovação e pertencimento em uma sociedade incompreensível e distante.",
+    "driveIds": {
+      "o-castelo-franz-kafka.pdf": "1h6-3glV8ZyTLoC7aeW8dPZ4iBhdGZTqd"
+    }
   },
   {
     "id": 48,
@@ -541,7 +694,10 @@ export const booksData = [
       "draculap.pdf"
     ],
     "genre": "Terror Clássico",
-    "focus": "Ameaça ao lar vitoriano, contágio, xenofobia, o confronto entre modernidade e crenças antigas."
+    "focus": "Ameaça ao lar vitoriano, contágio, xenofobia, o confronto entre modernidade e crenças antigas.",
+    "driveIds": {
+      "draculap.pdf": "1IAt3zkeTdVj5Qck4vmSp9BocDGGLDnbw"
+    }
   },
   {
     "id": 49,
@@ -552,7 +708,10 @@ export const booksData = [
       "emily-brontc3ab-e28093-o-morro-dos-ventos-uivantes.pdf"
     ],
     "genre": "Romance Trágico / Gótico",
-    "focus": "Paixões destrutivas, vingança multigeracional, classes sociais e o amor obsessivo de Heathcliff e Catherine."
+    "focus": "Paixões destrutivas, vingança multigeracional, classes sociais e o amor obsessivo de Heathcliff e Catherine.",
+    "driveIds": {
+      "emily-brontc3ab-e28093-o-morro-dos-ventos-uivantes.pdf": "1aXnLtTNh_xkqSIbRbxVsSSsW9NZ5fYaF"
+    }
   },
   {
     "id": 50,
@@ -564,7 +723,11 @@ export const booksData = [
       "oCortiço.pdf"
     ],
     "genre": "Naturalismo Brasileiro",
-    "focus": "O determinismo do meio, crítica à exploração humana, cortiço como personagem vivo. Obra obrigatória e essencial para o Brasil do séc. XIX."
+    "focus": "O determinismo do meio, crítica à exploração humana, cortiço como personagem vivo. Obra obrigatória e essencial para o Brasil do séc. XIX.",
+    "driveIds": {
+      "oCortiço.epub": "1jcPMhE-TEP9SGyRsRvlQg16PctQMmvxo",
+      "oCortiço.pdf": "1VuQ93cfj7HJltuK7urotD-LCSwADUVfs"
+    }
   },
   {
     "id": 51,
@@ -575,7 +738,10 @@ export const booksData = [
       "noitesbrancas.pdf"
     ],
     "genre": "Romance Sentimental",
-    "focus": "Solidão, o ato de sonhar acordado, desilusão amorosa e a beleza trágica das conexões humanas breves."
+    "focus": "Solidão, o ato de sonhar acordado, desilusão amorosa e a beleza trágica das conexões humanas breves.",
+    "driveIds": {
+      "noitesbrancas.pdf": "1LWWqsrrNjwD7631NMxUDM61Nt-F_j5yd"
+    }
   },
   {
     "id": 52,
@@ -586,7 +752,10 @@ export const booksData = [
       "Fiodor Dostoievski-1.pdf"
     ],
     "genre": "Realismo Russo / Drama",
-    "focus": "A profundidade da psicologia dos marginalizados, culpa, redenção e a moralidade sob estresse extremo."
+    "focus": "A profundidade da psicologia dos marginalizados, culpa, redenção e a moralidade sob estresse extremo.",
+    "driveIds": {
+      "Fiodor Dostoievski-1.pdf": "1Alglz1W6-X8mJRVy7AcB2nGegr5imRBD"
+    }
   },
   {
     "id": 53,
@@ -597,7 +766,10 @@ export const booksData = [
       "Liev-Tolstoi-A-Morte-de-Ivan-Ilitch.pdf"
     ],
     "genre": "Filosofia Existencial",
-    "focus": "Reflexão demolidora sobre o sentido da vida, a superficialidade das convenções sociais e a inevitabilidade da morte."
+    "focus": "Reflexão demolidora sobre o sentido da vida, a superficialidade das convenções sociais e a inevitabilidade da morte.",
+    "driveIds": {
+      "Liev-Tolstoi-A-Morte-de-Ivan-Ilitch.pdf": "1bww-wvnowDfljt_X7KQdb8GBeY3lTjGA"
+    }
   },
   {
     "id": 54,
@@ -608,7 +780,10 @@ export const booksData = [
       "romeuejulieta.pdf"
     ],
     "genre": "Tragédia Clássica",
-    "focus": "Amor juvenil obstaculizado pela rivalidade familiar ancestral. Análise sobre intolerância e suas consequências."
+    "focus": "Amor juvenil obstaculizado pela rivalidade familiar ancestral. Análise sobre intolerância e suas consequências.",
+    "driveIds": {
+      "romeuejulieta.pdf": "1ChOyyK2u708XyrbVHfx8TxdfIXd51mY3"
+    }
   },
   {
     "id": 55,
@@ -619,7 +794,10 @@ export const booksData = [
       "mercador.pdf"
     ],
     "genre": "Teatro (Drama)",
-    "focus": "Justiça vs. misericórdia, antissemitismo histórico, contratos implacáveis e a ganância (\"uma libra de carne\")."
+    "focus": "Justiça vs. misericórdia, antissemitismo histórico, contratos implacáveis e a ganância (\"uma libra de carne\").",
+    "driveIds": {
+      "mercador.pdf": "1g1j8ZWG3NLhRdC1TODlALKpp-LgAGEV_"
+    }
   },
   {
     "id": 56,
@@ -630,7 +808,10 @@ export const booksData = [
       "germinal_zola.pdf"
     ],
     "genre": "Naturalismo Francês",
-    "focus": "A dura vida dos mineiros de carvão, a exploração capitalista extrema e as primeiras greves operárias. Conexão total com Geografia/História."
+    "focus": "A dura vida dos mineiros de carvão, a exploração capitalista extrema e as primeiras greves operárias. Conexão total com Geografia/História.",
+    "driveIds": {
+      "germinal_zola.pdf": "104--Q7Bbf2ZPmIALt7ru8GENuzJ010Rl"
+    }
   },
   {
     "id": 57,
@@ -641,7 +822,10 @@ export const booksData = [
       "Admirável Mundo Novo autor Aldous Huxley.pdf"
     ],
     "genre": "Distopia Científica",
-    "focus": "Sociedade de castas hipertecnológica, alienação pelo prazer artificial (Soma), perda da individualidade e da arte."
+    "focus": "Sociedade de castas hipertecnológica, alienação pelo prazer artificial (Soma), perda da individualidade e da arte.",
+    "driveIds": {
+      "Admirável Mundo Novo autor Aldous Huxley.pdf": "1vMPARYkzOtBfANZjZCHo-eIGkXCWZppk"
+    }
   },
   {
     "id": 58,
@@ -653,7 +837,11 @@ export const booksData = [
       "012-A_Bota_de_Ferro-9786589008286.epub"
     ],
     "genre": "Distopia Política",
-    "focus": "Uma das primeiras distopias políticas modernas; a ascensão de um regime oligárquico violento nos EUA."
+    "focus": "Uma das primeiras distopias políticas modernas; a ascensão de um regime oligárquico violento nos EUA.",
+    "driveIds": {
+      "012-A-Bota-de-Ferro-978-65-89008-28-6.pdf": "1IyChrlcJRVBmnVfwTwIDKe4Jta3Oxz2k",
+      "012-A_Bota_de_Ferro-9786589008286.epub": "1L9jUfPlXXE1ykFc-QEpqDJxMvBUVttnf"
+    }
   },
   {
     "id": 59,
@@ -664,7 +852,10 @@ export const booksData = [
       "utopia.pdf"
     ],
     "genre": "Filosofia Política",
-    "focus": "Proposta idealista de sociedade perfeita; introdução às noções de socialismo utópico, tolerância e pacifismo histórico."
+    "focus": "Proposta idealista de sociedade perfeita; introdução às noções de socialismo utópico, tolerância e pacifismo histórico.",
+    "driveIds": {
+      "utopia.pdf": "1uqzMK960Pm4PBXR8ahCnxFUaw9YZO6I_"
+    }
   },
   {
     "id": 60,
@@ -675,7 +866,10 @@ export const booksData = [
       "cidadesol.pdf"
     ],
     "genre": "Filosofia Política",
-    "focus": "Concepção renascentista de cidade ideal baseada no saber científico comum e na igualdade."
+    "focus": "Concepção renascentista de cidade ideal baseada no saber científico comum e na igualdade.",
+    "driveIds": {
+      "cidadesol.pdf": "1zdK4REMBJRzZU7XVFKNm8RZ97h010l7c"
+    }
   },
   {
     "id": 61,
@@ -686,7 +880,10 @@ export const booksData = [
       "Sidarta.pdf"
     ],
     "genre": "Filosofia / Espiritualidade",
-    "focus": "Busca espiritual individual, desapego material, amadurecimento e a sabedoria adquirida pela própria vivência no mundo."
+    "focus": "Busca espiritual individual, desapego material, amadurecimento e a sabedoria adquirida pela própria vivência no mundo.",
+    "driveIds": {
+      "Sidarta.pdf": "1oz9wlU3HTUID9StFbJGQOEQIL5NrqEbC"
+    }
   },
   {
     "id": 62,
@@ -697,7 +894,10 @@ export const booksData = [
       "Cidadela - Antoine de Saint-Exupéry.pdf"
     ],
     "genre": "Filosofia Humanista",
-    "focus": "Meditações profundas sobre liderança, responsabilidade individual, império espiritual e o amor ao próximo."
+    "focus": "Meditações profundas sobre liderança, responsabilidade individual, império espiritual e o amor ao próximo.",
+    "driveIds": {
+      "Cidadela - Antoine de Saint-Exupéry.pdf": "1awI3eS-7Ye8vGQbm0LUJBr8cwcylzF2m"
+    }
   },
   {
     "id": 63,
@@ -708,7 +908,10 @@ export const booksData = [
       "iliadap.pdf"
     ],
     "genre": "Épico Clássico / Mitologia",
-    "focus": "A Guerra de Troia, a ira de Aquiles, o destino dos heróis gregos, honra e os limites da condição humana diante dos deuses."
+    "focus": "A Guerra de Troia, a ira de Aquiles, o destino dos heróis gregos, honra e os limites da condição humana diante dos deuses.",
+    "driveIds": {
+      "iliadap.pdf": "1RIkO0SKaBrL50x1I16jx7D25PMBOPPZo"
+    }
   },
   {
     "id": 64,
@@ -720,7 +923,11 @@ export const booksData = [
       "Antologia Poética - Fernando Pessoa.epub"
     ],
     "genre": "Poesia Modernista",
-    "focus": "Introdução ao modernismo em língua portuguesa. O desdobramento do \"Eu\" na lírica pessoana."
+    "focus": "Introdução ao modernismo em língua portuguesa. O desdobramento do \"Eu\" na lírica pessoana.",
+    "driveIds": {
+      "Antologia Poética - Fernando Pessoa.pdf": "1Md7P3sYeZhypaMH6zF-9NNuIg1giYRYX",
+      "Antologia Poética - Fernando Pessoa.epub": "19C07qBh2wmbh1nTuijik95tkD6m_iyAN"
+    }
   },
   {
     "id": 65,
@@ -732,7 +939,11 @@ export const booksData = [
       "Livro do Desassossego - Fernando Pessoa.epub"
     ],
     "genre": "Prosa Poética / Filosofia",
-    "focus": "O tédio existencial de Bernardo Soares, a fragmentação da identidade moderna e o valor literário da apatia contemplativa."
+    "focus": "O tédio existencial de Bernardo Soares, a fragmentação da identidade moderna e o valor literário da apatia contemplativa.",
+    "driveIds": {
+      "Livro do Desassossego - Fernando Pessoa.pdf": "1bTHUJ5BJGmLkL6k6VJL1Ba5E8W4TPzos",
+      "Livro do Desassossego - Fernando Pessoa.epub": "14W1C3VnULkYqxYp6jxZqfFgCH9vxJGIV"
+    }
   },
   {
     "id": 66,
@@ -743,7 +954,10 @@ export const booksData = [
       "Tchekhov.pdf"
     ],
     "genre": "Conto Realista",
-    "focus": "Análise sutil das contradições humanas cotidianas, a apatia burguesa e o realismo psicológico na Rússia czarista."
+    "focus": "Análise sutil das contradições humanas cotidianas, a apatia burguesa e o realismo psicológico na Rússia czarista.",
+    "driveIds": {
+      "Tchekhov.pdf": "1Bzpf7aZZocFyqPNFWQ4a72X3Gpn5jNgs"
+    }
   },
   {
     "id": 67,
@@ -754,7 +968,10 @@ export const booksData = [
       "anton-tchekhov-a-aposta.pdf"
     ],
     "genre": "Conto Filosófico",
-    "focus": "Isolamento voluntário vs. riqueza material. Debate extraordinário sobre o valor real da liberdade e do conhecimento humano."
+    "focus": "Isolamento voluntário vs. riqueza material. Debate extraordinário sobre o valor real da liberdade e do conhecimento humano.",
+    "driveIds": {
+      "anton-tchekhov-a-aposta.pdf": "14QKXAgrgygU5qVK_utXFA9JKtRyyf8Xr"
+    }
   },
   {
     "id": 68,
@@ -765,7 +982,10 @@ export const booksData = [
       "Microsoft Word - Oscar Wilde - O Retrato de Dorian Gray.pdf"
     ],
     "genre": "Esteticismo / Filosofia",
-    "focus": "Obsessão pela juventude e beleza externa, a degradação moral oculta na arte e no caráter (o espelho da alma)."
+    "focus": "Obsessão pela juventude e beleza externa, a degradação moral oculta na arte e no caráter (o espelho da alma).",
+    "driveIds": {
+      "Microsoft Word - Oscar Wilde - O Retrato de Dorian Gray.pdf": "1HT7EeuXwlPZt2yj8p0FFL4FTSjS5juxt"
+    }
   },
   {
     "id": 69,
@@ -777,7 +997,11 @@ export const booksData = [
       "10-_3_contos_cru_is_-_maupassant_2.epub"
     ],
     "genre": "Realismo / Naturalismo",
-    "focus": "Crítica social afiada, desnudamento do caráter burguês hipócrita."
+    "focus": "Crítica social afiada, desnudamento do caráter burguês hipócrita.",
+    "driveIds": {
+      "10-_3_contos_cru_is_-_maupassant_2.pdf": "1lhSwXEDorZz5zieAEwXkelmzfHFYPNHK",
+      "10-_3_contos_cru_is_-_maupassant_2.epub": "1GHEmmoj0ZnbcprZ45RtIhxp3NDb0rVma"
+    }
   },
   {
     "id": 70,
@@ -788,7 +1012,10 @@ export const booksData = [
       "Bola de Sebo - Guy de Maupassant.PDF"
     ],
     "genre": "Conto Histórico / Social",
-    "focus": "Hipocrisia patriótica e de classe social; exploração moral de uma jovem prostituta por pessoas de \"alto prestígio\"."
+    "focus": "Hipocrisia patriótica e de classe social; exploração moral de uma jovem prostituta por pessoas de \"alto prestígio\".",
+    "driveIds": {
+      "Bola de Sebo - Guy de Maupassant.PDF": "1a2RmSnJGiAqzM1fQUipKOK_Wodfrddj0"
+    }
   },
   {
     "id": 71,
@@ -800,7 +1027,11 @@ export const booksData = [
       "O Horla - Guy de Maupassant.epub"
     ],
     "genre": "Terror Psicológico",
-    "focus": "A perda gradual da sanidade mental, a sensação assustadora de uma entidade invisível que domina a vontade."
+    "focus": "A perda gradual da sanidade mental, a sensação assustadora de uma entidade invisível que domina a vontade.",
+    "driveIds": {
+      "O Horla - Guy de Maupassant.pdf": "1skRzhihur52XHwC_YtiEHUir7xkxeIqA",
+      "O Horla - Guy de Maupassant.epub": "1cIZ8Uei3v5rtPOHAx3jRCzqtuVx3PVVE"
+    }
   },
   {
     "id": 72,
@@ -811,7 +1042,10 @@ export const booksData = [
       "A Morta - Guy de Maupassant.pdf"
     ],
     "genre": "Conto de Fantasmas",
-    "focus": "A falsidade revelada dos epitáfios e o lado sombrio de quem já partiu."
+    "focus": "A falsidade revelada dos epitáfios e o lado sombrio de quem já partiu.",
+    "driveIds": {
+      "A Morta - Guy de Maupassant.pdf": "1PMWxbPTMZHiv7LwJTLF2p65D1MleKT6T"
+    }
   },
   {
     "id": 73,
@@ -823,7 +1057,11 @@ export const booksData = [
       "A Mão Misteriosa - Guy de Maupassant.epub"
     ],
     "genre": "Terror / Fantástico",
-    "focus": "O mistério inexplicável por trás de uma mão empalhada que ganha vida para se vingar."
+    "focus": "O mistério inexplicável por trás de uma mão empalhada que ganha vida para se vingar.",
+    "driveIds": {
+      "A Mão Misteriosa - Guy de Maupassant.pdf": "1l1vGcsKCaNAkq9fNUmrhX2u3ff2-UKtg",
+      "A Mão Misteriosa - Guy de Maupassant.epub": "1zQTVyYd1oBY2jDY7Wv9n9ebnSiBVEVKL"
+    }
   },
   {
     "id": 74,
@@ -835,7 +1073,11 @@ export const booksData = [
       "Berenice - Edgar Allan Poe.pdf"
     ],
     "genre": "Terror Psicológico",
-    "focus": "Monomania, obsessão mórbida pelos dentes da prima doente e o enterro prematuro macabro."
+    "focus": "Monomania, obsessão mórbida pelos dentes da prima doente e o enterro prematuro macabro.",
+    "driveIds": {
+      "Berenice - Edgar Allan Poe.epub": "14GKH9z6Pz5DMlp40aeagDs-sYPaqMKno",
+      "Berenice - Edgar Allan Poe.pdf": "1cjUQqZx9RrjhQgXwhN0OLFQl-1WKsFpL"
+    }
   },
   {
     "id": 75,
@@ -847,7 +1089,11 @@ export const booksData = [
       "Ligéia - Edgar Allan Poe.epub"
     ],
     "genre": "Sobrenatural Gótico",
-    "focus": "Ressurreição através da força de vontade espiritual e o amor que transcende a morte física."
+    "focus": "Ressurreição através da força de vontade espiritual e o amor que transcende a morte física.",
+    "driveIds": {
+      "Ligéia - Edgar Allan Poe.pdf": "1U_7pxmbfnE8g1tuLkcUFB_Wkm8MQtVYh",
+      "Ligéia - Edgar Allan Poe.epub": "1b3PsUxmvIfUZYLpA8_b3YZ33xgHT06YI"
+    }
   },
   {
     "id": 76,
@@ -859,7 +1105,11 @@ export const booksData = [
       "Morela - Edgar Allan Poe.pdf"
     ],
     "genre": "Terror Sobrenatural",
-    "focus": "Reencarnação da mãe na filha e o horror do destino familiar inescapável."
+    "focus": "Reencarnação da mãe na filha e o horror do destino familiar inescapável.",
+    "driveIds": {
+      "Morela - Edgar Allan Poe.epub": "1JrwVPBp4ssJ4dLgFhGSjZtjQaaU5lUm2",
+      "Morela - Edgar Allan Poe.pdf": "1xO41X00ZhT9QCDvfseUjF2tKSZtdvWlm"
+    }
   },
   {
     "id": 77,
@@ -871,7 +1121,11 @@ export const booksData = [
       "A Máscara da Morte Vermelha - Edgar Allan Poe.pdf"
     ],
     "genre": "Alegoria Gótica",
-    "focus": "A inevitabilidade da morte (a peste) e a futilidade da elite aristocrática que tenta ignorar o sofrimento popular."
+    "focus": "A inevitabilidade da morte (a peste) e a futilidade da elite aristocrática que tenta ignorar o sofrimento popular.",
+    "driveIds": {
+      "A Máscara da Morte Vermelha - Edgar Allan Poe.epub": "1JimtFfA8ZrS4MqK24Gvo_-gs0XCILDsb",
+      "A Máscara da Morte Vermelha - Edgar Allan Poe.pdf": "1-fsF8b3V8lNr61BbDLZYmkk2yrbACQF7"
+    }
   },
   {
     "id": 78,
@@ -883,7 +1137,11 @@ export const booksData = [
       "A Casa dos Loucos - Edgar Allan Poe.epub"
     ],
     "genre": "Sátira Psicológica",
-    "focus": "Inversão de papéis em um asilo psiquiátrico, sátira refinada às teorias de tratamento mental da época."
+    "focus": "Inversão de papéis em um asilo psiquiátrico, sátira refinada às teorias de tratamento mental da época.",
+    "driveIds": {
+      "A Casa dos Loucos - Edgar Allan Poe.pdf": "1y1jpe2SvUFo8W8Ks7MOrZXQSNWdkOZ_T",
+      "A Casa dos Loucos - Edgar Allan Poe.epub": "1XZUfjuneE-nJtLNNaWkxJ5YRzFq0SP8t"
+    }
   },
   {
     "id": 79,
@@ -894,7 +1152,10 @@ export const booksData = [
       "A Fábula do Silêncio - Edgar Allan Poe.pdf"
     ],
     "genre": "Prosa Poética",
-    "focus": "Estudo sobre o silêncio desolador e a solidão profunda, com imagens poéticas sombrias."
+    "focus": "Estudo sobre o silêncio desolador e a solidão profunda, com imagens poéticas sombrias.",
+    "driveIds": {
+      "A Fábula do Silêncio - Edgar Allan Poe.pdf": "1wiXMNaBFfXHwQ1YFbS0L0UpLnbiMW-an"
+    }
   },
   {
     "id": 80,
@@ -906,7 +1167,11 @@ export const booksData = [
       "A Ilha da Fada - Edgar Allan Poe.epub"
     ],
     "genre": "Fantasia Melancólica",
-    "focus": "Contemplação da natureza e a decadência das criaturas mágicas diante do avanço do tempo."
+    "focus": "Contemplação da natureza e a decadência das criaturas mágicas diante do avanço do tempo.",
+    "driveIds": {
+      "A Ilha da Fada - Edgar Allan Poe.pdf": "1GrfNy0auoLEHAWFkPJrbWixSAOVrWUb7",
+      "A Ilha da Fada - Edgar Allan Poe.epub": "1YgLot0JF-vH-WF1cTJn4EC7DJASCzLl4"
+    }
   },
   {
     "id": 81,
@@ -918,7 +1183,11 @@ export const booksData = [
       "Manuscrito Encontrado Numa Garrafa - Edgar Allan Poe.epub"
     ],
     "genre": "Aventura Sobrenatural",
-    "focus": "O terror marítimo existencial e a atração pelo mistério do desconhecido absoluto."
+    "focus": "O terror marítimo existencial e a atração pelo mistério do desconhecido absoluto.",
+    "driveIds": {
+      "Manuscrito Encontrado Numa Garrafa - Edgar Allan Poe.pdf": "1GM9l6cJMBQZ1FTubUjwF642I_Tf0MTF-",
+      "Manuscrito Encontrado Numa Garrafa - Edgar Allan Poe.epub": "14NbirbeFf6VNgSffvQcTOssRcVSpsTFt"
+    }
   },
   {
     "id": 82,
@@ -930,7 +1199,11 @@ export const booksData = [
       "O Caso do Sr. Valdemar - Edgar Allan Poe.epub"
     ],
     "genre": "Terror de Ficção",
-    "focus": "Mesmerismo (hipnose) aplicada no limiar da morte e a quebra assustadora das leis naturais."
+    "focus": "Mesmerismo (hipnose) aplicada no limiar da morte e a quebra assustadora das leis naturais.",
+    "driveIds": {
+      "O Caso do Sr. Valdemar - Edgar Allan Poe.pdf": "1SkLSwwM_K0bK9KcdsF-OTUtU_jCvlWO9",
+      "O Caso do Sr. Valdemar - Edgar Allan Poe.epub": "1rBdNUzp_f5rnWF4w1MsjqMPu3z3ceE-h"
+    }
   },
   {
     "id": 83,
@@ -942,7 +1215,11 @@ export const booksData = [
       "O Enterro Prematuro - Edgar Allan Poe.pdf"
     ],
     "genre": "Terror Clínico / Fobia",
-    "focus": "O pavor visceral do sepultamento em vida e a superação de medos obsessivos."
+    "focus": "O pavor visceral do sepultamento em vida e a superação de medos obsessivos.",
+    "driveIds": {
+      "O Enterro Prematuro - Edgar Allan Poe.epub": "1twcKWAWK1K9hRCXEnBNseFUlMmw5ToPn",
+      "O Enterro Prematuro - Edgar Allan Poe.pdf": "1CNF822bBP8icRhcD0H57hXbXHOfpop_Z"
+    }
   },
   {
     "id": 84,
@@ -953,7 +1230,10 @@ export const booksData = [
       "O Espectro - Edgar Allan Poe.pdf"
     ],
     "genre": "Terror / Suspense",
-    "focus": "Temática da obsessão física e desdobramentos lógicos do mistério."
+    "focus": "Temática da obsessão física e desdobramentos lógicos do mistério.",
+    "driveIds": {
+      "O Espectro - Edgar Allan Poe.pdf": "1LTxmvnjdtjVs_HBzrcTHnLLQOUpFOMdx"
+    }
   },
   {
     "id": 85,
@@ -965,7 +1245,11 @@ export const booksData = [
       "O Homem Que Fora Consumido - Edgar Allan Poe.epub"
     ],
     "genre": "Sátira / Comédia Negra",
-    "focus": "Sátira ao militarismo e à tecnologia do séc. XIX através de um general feito de próteses mecânicas."
+    "focus": "Sátira ao militarismo e à tecnologia do séc. XIX através de um general feito de próteses mecânicas.",
+    "driveIds": {
+      "O Homem Que Fora Consumido - Edgar Allan Poe.pdf": "184uBj8EIsfgCGZdvgmCt9fNdDxmxK9oa",
+      "O Homem Que Fora Consumido - Edgar Allan Poe.epub": "1qhk6Gi0GuiAXzE2BLIPXza4JwAB6UPV0"
+    }
   },
   {
     "id": 86,
@@ -977,6 +1261,10 @@ export const booksData = [
       "O Homem da Multidão - Edgar Allan Poe.epub"
     ],
     "genre": "Conto Urbano / Psicológico",
-    "focus": "A solidão nas metrópoles nascentes, a incapacidade de estar sozinho e o mistério de quem vaga sem rumo pelas ruas."
+    "focus": "A solidão nas metrópoles nascentes, a incapacidade de estar sozinho e o mistério de quem vaga sem rumo pelas ruas.",
+    "driveIds": {
+      "O Homem da Multidão - Edgar Allan Poe.pdf": "1sDgpwowRGjfLNm8ujsFFNfPYLKW62ynb",
+      "O Homem da Multidão - Edgar Allan Poe.epub": "1D3tgG_Js3iFdjB0knen1ko0rJBHZsiHq"
+    }
   }
 ];

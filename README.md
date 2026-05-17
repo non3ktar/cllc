@@ -69,6 +69,11 @@ npm run build
 
 ## 📋 Histórico de Modificações (Changelog)
 
+* **v1.6.0 (17/05/2026) — Automatização Completa e Integração Direta de Nuvem:**
+  * **Extração Dinâmica de Nuvem (128 Arquivos)**: Rastreamento completo via subagente de navegador com rolagem contínua na pasta de livros do Google Drive, coletando com sucesso 100% dos IDs públicos das obras.
+  * **Integração Direta no Código (`booksData.js`)**: Injeção automatizada dos IDs do Google Drive diretamente nos metadados das obras no arquivo `src/booksData.js`. Mapeou **120 de 121 arquivos de mídia físicos** (correspondência de 99.1% das obras).
+  * **Fallback Inteligente de Leitura e Download**: Modificação do `App.jsx` para acionar automaticamente o botão "Ler no Drive" usando os IDs do `booksData.js` e habilitar o botão "Baixar EPUB" diretamente do Google Drive se o arquivo local não estiver disponível.
+  * **Sem Necessidade de Configuração Manual**: O professor não precisa preencher individualmente cada ID na Área Administrativa; o acervo digital funciona online "out-of-the-box".
 * **v1.5.0 (17/05/2026) — Mapeamento e Acessibilidade Local:**
   * **Acessibilidade Universal**: Botão de assistente de voz (`🔊 Ouvir Resumo` por TTS) ativo em 100% dos cards do acervo, garantindo interatividade mesmo para clássicos sem arquivos digitais locais.
   * **Mapeamento de 14 Clássicos**: Associação cirúrgica de arquivos físicos locais (como `fc3a1bulasdeesopo2ed.pdf`, `alicep.pdf` e `3574Sherlock-Holmes-0bra-Completa.pdf`) para conectar botões de Leitura e Download offline.
