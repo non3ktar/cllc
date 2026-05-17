@@ -9,7 +9,7 @@ import {
   signInWithEmailAndPassword, signOut, onAuthStateChanged 
 } from 'firebase/auth';
 import { 
-  collection, addDoc, onSnapshot, doc, setDoc, deleteDoc 
+  collection, addDoc, onSnapshot, doc, setDoc, deleteDoc, getDocs
 } from 'firebase/firestore';
 import { 
   Search, Book, BookOpen, Star, Plus, User, Award, 
@@ -695,6 +695,28 @@ export default function App() {
     } catch (e) {
       console.error(e);
       return false;
+    }
+  };
+
+  const handleClearAccessLogs = async () => {
+    if (!window.confirm("⚠️ Tem certeza que deseja apagar permanentemente todo o histórico de acessos dos alunos? Esta ação não pode ser desfeita!")) {
+      return;
+    }
+    try {
+      // 1. Limpar localmente no Dexie
+      await db.accessLogs.clear();
+      
+      // 2. Limpar no Firestore (se conectado)
+      if (isFirebaseActive() && firestoreDb) {
+        const querySnapshot = await getDocs(collection(firestoreDb, 'accessLogs'));
+        const deletePromises = querySnapshot.docs.map(docSnap => deleteDoc(doc(firestoreDb, 'accessLogs', docSnap.id)));
+        await Promise.all(deletePromises);
+      }
+      
+      triggerToast("Histórico de acessos limpo com sucesso! 🧹");
+    } catch (err) {
+      console.error("Erro ao limpar histórico de acessos:", err);
+      triggerToast("Erro ao limpar histórico de acessos. ❌");
     }
   };
 
