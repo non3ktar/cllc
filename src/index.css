@@ -1,0 +1,151 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Premium Design Helpers - Reversed Sand & Chocolate Theme */
+@layer base {
+  body {
+    background-color: #edd4be; /* Areia Creme Claro (A mais clara da paleta como fundo principal) */
+    color: #3b2e2a; /* Escrita estrutural em tom Chocolate Escuro */
+    font-family: 'Outfit', 'Plus Jakarta Sans', system-ui, sans-serif;
+  }
+}
+
+/* 🧱 CARDS: Marrom Chocolate Escuro com Alto Contraste */
+.glass-panel {
+  background: rgba(82, 66, 60, 0.96) !important; /* Marrom escuro translúcido para contraste máximo */
+  backdrop-filter: blur(16px) saturate(120%);
+  -webkit-backdrop-filter: blur(16px) saturate(120%);
+  border: 1px solid rgba(237, 212, 190, 0.2) !important; /* Borda clara areia-creme para definição */
+  box-shadow: 0 10px 30px rgba(82, 66, 60, 0.15) !important;
+}
+
+.glass-panel-hover {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-panel-hover:hover {
+  background: rgba(59, 46, 42, 0.98) !important; /* Marrom ainda mais escuro no hover */
+  border-color: rgba(173, 92, 112, 0.6) !important; /* Destaque na borda em Crimson Rose */
+  box-shadow: 0 15px 35px -10px rgba(173, 92, 112, 0.3) !important;
+  transform: translateY(-3px);
+}
+
+/* 🔍 INPUTS: Branco Puro com Bordas Chocolates (Excelente Leitura) */
+.glass-input {
+  background: #ffffff !important;
+  border: 1px solid rgba(82, 66, 60, 0.35) !important;
+  color: #3b2e2a !important; /* Escrita escura nítida */
+  transition: all 0.3s ease;
+}
+
+.glass-input::placeholder {
+  color: #a3918a !important;
+}
+
+.glass-input:focus {
+  border-color: rgba(173, 92, 112, 0.8) !important; /* Foco em Crimson Rose */
+  box-shadow: 0 0 15px rgba(173, 92, 112, 0.25) !important;
+  outline: none;
+  background: #ffffff !important;
+}
+
+/* ✍️ TIPOGRAFIA DE CONTRASTE SELETIVA */
+
+/* Textos e cabeçalhos FORA dos cards (sobre o fundo claro) ficam em marrom escuro/terracota */
+h1, h2, h3, h4,
+#root h1, #root h2, #root h3, #root h4,
+.text-white:not(.glass-panel *):not(button):not(button *):not(a):not(a *):not(.bg-accentBlue):not(.bg-accentBlue *):not(.bg-gradient-to-r):not(.bg-gradient-to-r *) {
+  color: #3b2e2a !important;
+}
+
+.text-gray-400:not(.glass-panel *) {
+  color: #52423c !important; /* Subtítulos em chocolate escuro */
+}
+
+.text-gray-300:not(.glass-panel *) {
+  color: #3b2e2a !important;
+}
+
+/* Textos e cabeçalhos DENTRO dos cards (sobre o fundo escuro) ficam em branco e creme areia claro */
+.glass-panel h1, .glass-panel h2, .glass-panel h3, .glass-panel h4, .glass-panel h5,
+.glass-panel .text-white, .glass-panel td.text-white, .glass-panel span.text-white {
+  color: #ffffff !important;
+}
+
+.glass-panel .text-gray-400 {
+  color: #d3ad98 !important; /* Pêssego claro para subtextos internos */
+}
+
+.glass-panel .text-gray-300, .glass-panel p.text-gray-300 {
+  color: #edd4be !important; /* Creme Areia Claro para descrições dos livros */
+}
+
+.glass-panel .text-gray-200 {
+  color: #faf6f0 !important;
+}
+
+/* Custom Scrollbar - Premium Warm Palette */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #edd4be; /* Fundo claro na trilha da scrollbar */
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(82, 66, 60, 0.35); /* Creme escuro/chocolate */
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(173, 92, 112, 0.7); /* Destaque da scrollbar em Crimson Rose */
+}
+
+/* Tags de Audiobook dentro dos Cards (Dusty Rose vibrante) */
+.glass-panel .text-fuchsia-400, .glass-panel .text-fuchsia-300 {
+  color: #ad5c70 !important;
+}
+
+/* Filtros por série e botões na área de filtragem (fundo claro) */
+.bg-transparent.text-gray-400.border-gray-800 {
+  background-color: rgba(255, 255, 255, 0.6) !important;
+  color: #52423c !important;
+  border-color: rgba(82, 66, 60, 0.25) !important;
+}
+
+.bg-transparent.text-gray-400.border-gray-800:hover {
+  background-color: #ffffff !important;
+  color: #ad5c70 !important;
+  border-color: rgba(173, 92, 112, 0.5) !important;
+}
+
+/* Botões inativos dentro dos cards (estilo escuro) */
+.glass-panel .bg-gray-900\/60.text-gray-400.border-gray-800 {
+  background-color: rgba(82, 66, 60, 0.4) !important;
+  color: #d3ad98 !important;
+  border-color: rgba(237, 212, 190, 0.15) !important;
+}
+
+.glass-panel .bg-gray-900\/60.text-gray-400.border-gray-800:hover {
+  background-color: rgba(82, 66, 60, 0.8) !important;
+  color: #ffffff !important;
+}
+
+/* Glow Elements */
+.glow-blue {
+  box-shadow: 0 0 50px 10px rgba(173, 92, 112, 0.06);
+}
+
+.glow-purple {
+  box-shadow: 0 0 50px 10px rgba(82, 66, 60, 0.05);
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  display: block;
+}
