@@ -650,7 +650,7 @@ export default function App() {
           } else if (accessType === 'Download (EPUB)') {
             const localEpub = book.files?.find(f => f.toLowerCase().endsWith('.epub'));
             const driveEpubId = book.driveEpubId;
-            const url = localEpub ? `/livros/${encodeURIComponent(localEpub)}` : `https://drive.google.com/file/d/${driveEpubId}/view?usp=drivesdk`;
+            const url = localEpub ? `${import.meta.env.BASE_URL}livros/${encodeURIComponent(localEpub)}` : `https://drive.google.com/file/d/${driveEpubId}/view?usp=drivesdk`;
             window.open(url, '_blank', 'noopener,noreferrer');
           } else if (accessType === 'Audiobook') {
             const audioId = book.audioId || booksMetaMap[book.id]?.audioUrl;
@@ -1098,7 +1098,7 @@ export default function App() {
                                 <button 
                                   onClick={() => logBookAccess(book, 'Download (EPUB)').then(logged => {
                                     if (logged !== false) {
-                                      const url = localEpub ? `/livros/${encodeURIComponent(localEpub)}` : `https://drive.google.com/file/d/${driveEpubId}/view?usp=drivesdk`;
+                                      const url = localEpub ? `${import.meta.env.BASE_URL}livros/${encodeURIComponent(localEpub)}` : `https://drive.google.com/file/d/${driveEpubId}/view?usp=drivesdk`;
                                       window.open(url, '_blank', 'noopener,noreferrer');
                                     }
                                   })}
