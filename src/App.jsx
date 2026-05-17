@@ -54,11 +54,10 @@ export default function App() {
   const [ttsSpeaking, setTtsSpeaking] = useState(false);
   const [ttsBookId, setTtsBookId] = useState(null);
 
-  // Estados da Configuração do Firebase no Painel
-  const [fbApiKey, setFbApiKey] = useState('');
-  const [fbProjectId, setFbProjectId] = useState('');
-  const [fbAuthDomain, setFbAuthDomain] = useState('');
-  const [fbAppId, setFbAppId] = useState('');
+  // Estados para Adicionar Novo Livro (Painel do Professor)
+  const [newBookForm, setNewBookForm] = useState({
+    title: '', author: '', grade: '6º Ano', genre: '', coverDriveId: '', driveId: '', epubDriveId: '', audioId: '', synopsis: ''
+  });
   const [firebaseConnected, setFirebaseConnected] = useState(isFirebaseActive());
 
   // Estados de edição de Meta do Livro (Professor)
@@ -97,6 +96,8 @@ export default function App() {
   const progressList = useLiveQuery(() => db.progress.toArray()) || [];
   const booksMetaList = useLiveQuery(() => db.booksMeta.toArray()) || [];
   const accessLogsList = useLiveQuery(() => db.accessLogs.toArray()) || [];
+  const customBooksList = useLiveQuery(() => db.customBooks.toArray()) || [];
+  const allBooks = useMemo(() => [...booksData, ...customBooksList], [customBooksList]);
 
   // Mapeamentos práticos de dados locais
   const progressMap = useMemo(() => {
@@ -315,7 +316,7 @@ export default function App() {
 
   // --- FILTROS E BUSCA ---
   const filteredBooks = useMemo(() => {
-    return booksData.filter(book => {
+    return allBooks.filter(book => {
       const matchesGrade = selectedGrade === 'Todos' || book.grade === selectedGrade;
       
       const normSearch = searchTerm.toLowerCase();
@@ -334,7 +335,7 @@ export default function App() {
 
   // --- ESTATÍSTICAS GERAIS ---
   const stats = useMemo(() => {
-    const totalBooks = booksData.length;
+    const totalBooks = allBooks.length;
     const lidos = progressList.filter(p => p.status === 'Lido').length;
     const lendo = progressList.filter(p => p.status === 'Lendo').length;
     const queroLer = progressList.filter(p => p.status === 'Quero Ler').length;
@@ -482,37 +483,55 @@ export default function App() {
     }
   };
 
-  // --- SALVAR CONFIGURAÇÃO DO FIREBASE (PROFESSOR) ---
-  const handleSaveFirebase = (e) => {
+  // --- ADICIONAR NOVO LIVRO AO ACERVO (PROFESSOR) ---
+  const handleAddCustomBook = async (e) => {
     e.preventDefault();
-    if (!fbApiKey.trim() || !fbProjectId.trim()) {
-      triggerToast('Por favor, preencha a API Key e o Project ID.');
+    if (!newBookForm.title.trim() || !newBookForm.author.trim()) {
+      triggerToast("Título e Autor são obrigatórios! ❌");
       return;
     }
-
-    const config = {
-      apiKey: fbApiKey.trim(),
-      projectId: fbProjectId.trim(),
-      authDomain: fbAuthDomain.trim() || `${fbProjectId.trim()}.firebaseapp.com`,
-      appId: fbAppId.trim()
+    
+    const newBookId = `custom_${Date.now()}`;
+    const newBook = {
+      id: newBookId,
+      title: newBookForm.title.trim(),
+      author: newBookForm.author.trim(),
+      grade: newBookForm.grade,
+      genre: newBookForm.genre.trim(),
+      synopsis: newBookForm.synopsis.trim(),
+      color: 'bg-emerald-500', // Default modern color
+      files: []
     };
-
-    const success = saveFirebaseConfig(config);
-    if (success) {
-      setFirebaseConnected(true);
-      triggerToast('Conectando ao Firebase... O aplicativo irá recarregar! 🔥');
-      setTimeout(() => window.location.reload(), 2000);
-    } else {
-      triggerToast('Erro ao salvar configurações.');
-    }
-  };
-
-  const handleDisconnectFirebase = () => {
-    if (confirm('Deseja desconectar da nuvem e voltar ao modo 100% offline local?')) {
-      clearFirebaseConfig();
-      setFirebaseConnected(false);
-      triggerToast('Desconectado! O aplicativo irá recarregar...');
-      setTimeout(() => window.location.reload(), 1500);
+    
+    try {
+      // 1. Salvar livro na base local e nuvem
+      await db.customBooks.add(newBook);
+      if (isFirebaseActive() && firestoreDb) {
+        await setDoc(doc(firestoreDb, 'customBooks', newBookId), newBook);
+      }
+      
+      // 2. Salvar o mapeamento de links (se fornecido)
+      if (newBookForm.driveId || newBookForm.epubDriveId || newBookForm.coverDriveId || newBookForm.audioId) {
+        const metaMap = {
+          bookId: newBookId,
+          driveId: newBookForm.driveId.trim(),
+          driveEpubId: newBookForm.epubDriveId.trim(),
+          coverDriveId: newBookForm.coverDriveId.trim(),
+          audioUrl: newBookForm.audioId.trim()
+        };
+        await db.booksMeta.put(metaMap);
+        if (isFirebaseActive() && firestoreDb) {
+          await setDoc(doc(firestoreDb, 'booksMeta', newBookId), metaMap);
+        }
+      }
+      
+      triggerToast(`Livro "${newBook.title}" adicionado ao acervo com sucesso! 📚✨`);
+      setNewBookForm({
+        title: '', author: '', grade: '6º Ano', genre: '', coverDriveId: '', driveId: '', epubDriveId: '', audioId: '', synopsis: ''
+      });
+    } catch (err) {
+      console.error(err);
+      triggerToast("Erro ao adicionar novo livro. ❌");
     }
   };
 
@@ -1278,68 +1297,54 @@ export default function App() {
                 </button>
               </div>
             
-            {/* --- CONFIGURAÇÕES DO FIREBASE (NUVEM DO PROFESSOR) --- */}
-            <div className="glass-panel p-6 rounded-2xl">
+            {/* --- ADICIONAR NOVO LIVRO AO ACERVO --- */}
+            <div className="glass-panel p-6 rounded-2xl mb-6">
               <h3 className="text-lg font-bold text-white flex items-center gap-2 mb-2">
-                <Cloud className="w-5 h-5 text-accentBlue" /> Sincronização em Nuvem (Firebase)
+                <Plus className="w-5 h-5 text-accentBlue" /> Adicionar Nova Obra ao Acervo
               </h3>
-              <p className="text-gray-400 text-xs mb-4">
-                Conecte seu painel literário a um projeto do Firebase para compartilhar resenhas e metadados de livros em tempo real em todas as salas e tablets!
+              <p className="text-gray-400 text-xs mb-6">
+                Cadastre novos livros e insira os links do Google Drive para que eles apareçam imediatamente na biblioteca de todas as turmas.
               </p>
 
-              {firebaseConnected ? (
-                <div className="flex flex-col md:flex-row items-start md:items-center justify-between p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 gap-4">
-                  <div>
-                    <span className="text-xs font-bold text-emerald-400 block">Status: Conectado</span>
-                    <span className="text-[11px] text-gray-300">Todas as resenhas e links digitais do acervo estão sendo salvos e atualizados em tempo real!</span>
-                  </div>
-                  <button
-                    onClick={handleDisconnectFirebase}
-                    className="px-4 py-2 rounded-xl bg-rose-500 text-white font-bold text-xs hover:bg-rose-600 transition-colors"
-                  >
-                    Desconectar Firebase
+              <form onSubmit={handleAddCustomBook} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
+                <div>
+                  <label className="text-[10px] uppercase text-gray-400 font-bold tracking-wider block mb-1">Título da Obra <span className="text-rose-500">*</span></label>
+                  <input type="text" required placeholder="Ex: O Pequeno Príncipe" value={newBookForm.title} onChange={e => setNewBookForm({...newBookForm, title: e.target.value})} className="w-full px-3 py-2 rounded-xl glass-input text-xs text-white" />
+                </div>
+                <div>
+                  <label className="text-[10px] uppercase text-gray-400 font-bold tracking-wider block mb-1">Autor <span className="text-rose-500">*</span></label>
+                  <input type="text" required placeholder="Ex: Antoine de Saint-Exupéry" value={newBookForm.author} onChange={e => setNewBookForm({...newBookForm, author: e.target.value})} className="w-full px-3 py-2 rounded-xl glass-input text-xs text-white" />
+                </div>
+                <div>
+                  <label className="text-[10px] uppercase text-gray-400 font-bold tracking-wider block mb-1">Turma/Série</label>
+                  <select value={newBookForm.grade} onChange={e => setNewBookForm({...newBookForm, grade: e.target.value})} className="w-full px-3 py-2 rounded-xl glass-input text-xs text-white bg-gray-900">
+                    <option value="6º Ano">6º Ano</option>
+                    <option value="7º Ano">7º Ano</option>
+                    <option value="8º Ano">8º Ano</option>
+                    <option value="9º Ano">9º Ano</option>
+                    <option value="Livre">Livre (Todas as Séries)</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="text-[10px] uppercase text-gray-400 font-bold tracking-wider block mb-1">Gênero Literário</label>
+                  <input type="text" placeholder="Ex: Fábula, Ficção, Poesia" value={newBookForm.genre} onChange={e => setNewBookForm({...newBookForm, genre: e.target.value})} className="w-full px-3 py-2 rounded-xl glass-input text-xs text-white" />
+                </div>
+                
+                <div className="lg:col-span-2">
+                  <label className="text-[10px] uppercase text-gray-400 font-bold tracking-wider block mb-1">Link de Leitura (Drive PDF ID)</label>
+                  <input type="text" placeholder="ID do arquivo PDF no Google Drive" value={newBookForm.driveId} onChange={e => setNewBookForm({...newBookForm, driveId: e.target.value})} className="w-full px-3 py-2 rounded-xl glass-input text-xs text-white" />
+                </div>
+                <div className="lg:col-span-2">
+                  <label className="text-[10px] uppercase text-gray-400 font-bold tracking-wider block mb-1">Link de Audiobook (Drive MP3 ID)</label>
+                  <input type="text" placeholder="ID do arquivo de áudio no Google Drive" value={newBookForm.audioId} onChange={e => setNewBookForm({...newBookForm, audioId: e.target.value})} className="w-full px-3 py-2 rounded-xl glass-input text-xs text-white" />
+                </div>
+                
+                <div className="md:col-span-2 lg:col-span-4 mt-2">
+                  <button type="submit" className="w-full py-3 rounded-xl bg-accentBlue text-white font-bold hover:bg-fuchsia-300 hover:text-gray-950 transition-all text-sm border border-accentBlue/20 shadow-lg flex items-center justify-center gap-2">
+                    <Plus className="w-4 h-4" /> Cadastrar Obra no Acervo
                   </button>
                 </div>
-              ) : (
-                <form onSubmit={handleSaveFirebase} className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
-                  <div>
-                    <label className="text-[10px] uppercase text-gray-400 font-bold tracking-wider block mb-1">Firebase API Key:</label>
-                    <input 
-                      type="password"
-                      placeholder="AIzaSy..."
-                      value={fbApiKey}
-                      onChange={(e) => setFbApiKey(e.target.value)}
-                      className="w-full px-3 py-2 rounded-xl glass-input text-xs"
-                    />
-                  </div>
-                  <div>
-                    <label className="text-[10px] uppercase text-gray-400 font-bold tracking-wider block mb-1">Firebase Project ID:</label>
-                    <input 
-                      type="text"
-                      placeholder="cllc-leitura"
-                      value={fbProjectId}
-                      onChange={(e) => setFbProjectId(e.target.value)}
-                      className="w-full px-3 py-2 rounded-xl glass-input text-xs"
-                    />
-                  </div>
-                  <div>
-                    <label className="text-[10px] uppercase text-gray-400 font-bold tracking-wider block mb-1">Firebase App ID (Opcional):</label>
-                    <input 
-                      type="text"
-                      placeholder="1:1234..."
-                      value={fbAppId}
-                      onChange={(e) => setFbAppId(e.target.value)}
-                      className="w-full px-3 py-2 rounded-xl glass-input text-xs"
-                    />
-                  </div>
-                  <button
-                    type="submit"
-                    className="w-full py-2.5 rounded-xl bg-accentBlue text-white font-bold hover:bg-fuchsia-300 hover:text-gray-950 transition-all text-xs border border-accentBlue/20"
-                  >
-                    Conectar Firebase 🔥
-                  </button>
-                </form>
-              )}
+              </form>
             </div>
 
             {/* --- CONTROLE DO ACERVO DIGITAL (DRIVE / AUDIOBOOKS) --- */}
@@ -1363,7 +1368,7 @@ export default function App() {
                     </tr>
                   </thead>
                   <tbody>
-                    {booksData.map((book) => {
+                    {allBooks.map((book) => {
                       const meta = booksMetaMap[book.id];
                       const isEditing = editingBookMetaId === book.id;
                       
@@ -1643,7 +1648,7 @@ export default function App() {
                     </thead>
                     <tbody>
                       {reviews.map((rev) => {
-                        const book = booksData.find(b => b.id === rev.bookId);
+                        const book = allBooks.find(b => b.id === rev.bookId);
                         return (
                           <tr key={rev.id} className="border-b border-gray-800/50 hover:bg-gray-900/30 transition-colors">
                             <td className="py-3 px-4 font-bold text-white">{rev.studentName}</td>
