@@ -68,8 +68,8 @@ h1, h2, h3, h4,
 }
 
 /* Textos e cabeçalhos DENTRO dos cards (sobre o fundo escuro) ficam em branco e creme areia claro */
-.glass-panel h1, .glass-panel h2, .glass-panel h3, .glass-panel h4, .glass-panel h5,
-.glass-panel .text-white, .glass-panel td.text-white, .glass-panel span.text-white {
+#root .glass-panel h1, #root .glass-panel h2, #root .glass-panel h3, #root .glass-panel h4, #root .glass-panel h5,
+#root .glass-panel .text-white, #root .glass-panel td.text-white, #root .glass-panel span.text-white {
   color: #ffffff !important;
 }
 

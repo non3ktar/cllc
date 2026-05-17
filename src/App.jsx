@@ -853,10 +853,11 @@ export default function App() {
               )}
             </div>
             <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-white m-0">
-              Painel Literário <span className="bg-gradient-to-r from-accentBlue to-accentPurple bg-clip-text text-transparent">CLLC</span>
+              Literosfera <span className="bg-gradient-to-r from-accentBlue to-accentPurple bg-clip-text text-transparent">CLLC</span>
             </h1>
             <p className="text-gray-400 text-sm mt-1">
               Explore o acervo clássico, registre leituras, ouça audiobooks e escreva resenhas de forma compartilhada.
+              <span className="text-[11px] text-accentBlue/80 font-semibold uppercase tracking-wider mt-1.5 block">Desenvolvido pelo Profº Sérgio Araújo para LPT</span>
             </p>
           </div>
           
