@@ -1034,7 +1034,7 @@ export default function App() {
                         </div>
 
                         {/* Title & Author */}
-                        <h3 className="text-lg font-bold text-white leading-tight group-hover:text-accentBlue transition-colors mb-1">
+                        <h3 className="text-lg font-bold text-white leading-tight transition-colors mb-1">
                           {book.title}
                         </h3>
                         <span className="text-xs text-gray-400 block mb-3">por {book.author}</span>
