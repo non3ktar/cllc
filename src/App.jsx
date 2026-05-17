@@ -3,8 +3,11 @@ import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from './db';
 import { booksData } from './booksData';
 import { 
-  isFirebaseActive, firestoreDb, saveFirebaseConfig, clearFirebaseConfig 
+  isFirebaseActive, firestoreDb, saveFirebaseConfig, clearFirebaseConfig, auth 
 } from './firebase';
+import { 
+  signInWithEmailAndPassword, signOut, onAuthStateChanged 
+} from 'firebase/auth';
 import { 
   collection, addDoc, onSnapshot, doc, setDoc, deleteDoc 
 } from 'firebase/firestore';
@@ -63,6 +66,13 @@ export default function App() {
   const [tempDriveId, setTempDriveId] = useState('');
   const [tempAudioUrl, setTempAudioUrl] = useState('');
   
+  // --- Estados de Autenticação do Professor (Gatekeeper) ---
+  const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
+  const [adminEmail, setAdminEmail] = useState('');
+  const [adminPassword, setAdminPassword] = useState('');
+  const [localPasscode, setLocalPasscode] = useState('');
+  const [loginError, setLoginError] = useState('');
+
   // Alertas temporários
   const [toast, setToast] = useState(null);
 
@@ -440,6 +450,81 @@ export default function App() {
       setFirebaseConnected(false);
       triggerToast('Desconectado! O aplicativo irá recarregar...');
       setTimeout(() => window.location.reload(), 1500);
+    }
+  };
+
+  // --- LOGIN E LOGOUT DO PROFESSOR (AUTH GATEKEEPER) ---
+  useEffect(() => {
+    if (!auth) return;
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setIsAdminLoggedIn(true);
+      } else {
+        setIsAdminLoggedIn(false);
+      }
+    });
+    return () => unsubscribe();
+  }, []);
+
+  const handleFirebaseLogin = (e) => {
+    e.preventDefault();
+    setLoginError('');
+    if (!auth) {
+      setLoginError('Serviço de autenticação não inicializado.');
+      return;
+    }
+
+    signInWithEmailAndPassword(auth, adminEmail.trim(), adminPassword)
+      .then((userCredential) => {
+        setIsAdminLoggedIn(true);
+        setAdminEmail('');
+        setAdminPassword('');
+        setLoginError('');
+        triggerToast('Painel do Professor desbloqueado com sucesso! 🔓');
+      })
+      .catch((error) => {
+        console.error("Erro no login:", error);
+        let errorMsg = 'Falha ao autenticar. Verifique o email e senha.';
+        if (error.code === 'auth/invalid-credential' || error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found') {
+          errorMsg = 'E-mail ou senha incorretos.';
+        } else if (error.code === 'auth/invalid-email') {
+          errorMsg = 'Formato de e-mail inválido.';
+        }
+        setLoginError(errorMsg);
+      });
+  };
+
+  const handleLocalPasscodeLogin = (e) => {
+    e.preventDefault();
+    setLoginError('');
+    // Senha local padrão para modo offline
+    if (localPasscode === 'cllc2026') {
+      setIsAdminLoggedIn(true);
+      setLocalPasscode('');
+      setLoginError('');
+      triggerToast('Acesso local liberado com sucesso! 🔓');
+    } else {
+      setLoginError('Código de acesso local incorreto. Use a senha padrão cllc2026.');
+    }
+  };
+
+  const handleLogout = () => {
+    if (auth && isFirebaseActive()) {
+      signOut(auth)
+        .then(() => {
+          setIsAdminLoggedIn(false);
+          setActiveTab('estudante');
+          triggerToast('Sessão encerrada e painel bloqueado.');
+        })
+        .catch((err) => {
+          console.error("Erro ao deslogar:", err);
+          setIsAdminLoggedIn(false);
+          setActiveTab('estudante');
+        });
+    } else {
+      setIsAdminLoggedIn(false);
+      setActiveTab('estudante');
+      triggerToast('Painel bloqueado com segurança.');
     }
   };
 
@@ -848,7 +933,131 @@ export default function App() {
         {/* === ABA PROFESSOR: PAINEL DE CONTROLE === */}
         {/* ======================================= */}
         {activeTab === 'professor' && (
-          <div className="flex flex-col gap-8">
+          !isAdminLoggedIn ? (
+            /* SLEEK GLASSMORPHIC LOGIN SCREEN */
+            <div className="glass-panel p-8 rounded-2xl max-w-md mx-auto my-12 relative overflow-hidden" onClick={(e) => e.stopPropagation()}>
+              <div className="absolute top-[-20%] left-[-20%] w-[60%] h-[60%] rounded-full bg-accentBlue/10 blur-[80px]" />
+              <div className="absolute bottom-[-20%] right-[-20%] w-[60%] h-[60%] rounded-full bg-accentPurple/10 blur-[80px]" />
+              
+              <div className="text-center mb-6 relative">
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-accentBlue to-accentPurple flex items-center justify-center mx-auto mb-3 shadow-lg shadow-accentBlue/20">
+                  <Settings className="w-6 h-6 text-white" />
+                </div>
+                <h3 className="text-lg font-bold text-white leading-tight">Painel de Acesso Seguro</h3>
+                <p className="text-gray-400 text-xs mt-1">Área Restrita do Professor</p>
+              </div>
+
+              {isFirebaseActive() ? (
+                /* FIREBASE CLOUD LOGIN */
+                <form onSubmit={handleFirebaseLogin} className="space-y-4 relative">
+                  <div>
+                    <label className="text-[10px] uppercase font-bold text-gray-400 tracking-wider block mb-1.5">Email do Professor</label>
+                    <div className="relative">
+                      <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-500">
+                        <User className="w-4 h-4" />
+                      </span>
+                      <input 
+                        type="email"
+                        required
+                        value={adminEmail}
+                        onChange={(e) => setAdminEmail(e.target.value)}
+                        placeholder="exemplo@cllc.com"
+                        className="w-full pl-9 pr-3 py-2 rounded-xl bg-gray-950/80 border border-gray-800 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-accentBlue/50 transition-colors"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="text-[10px] uppercase font-bold text-gray-400 tracking-wider block mb-1.5">Senha de Acesso</label>
+                    <div className="relative">
+                      <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-500">
+                        <Settings className="w-4 h-4" />
+                      </span>
+                      <input 
+                        type="password"
+                        required
+                        value={adminPassword}
+                        onChange={(e) => setAdminPassword(e.target.value)}
+                        placeholder="••••••••"
+                        className="w-full pl-9 pr-3 py-2 rounded-xl bg-gray-950/80 border border-gray-800 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-accentBlue/50 transition-colors"
+                      />
+                    </div>
+                  </div>
+
+                  {loginError && (
+                    <div className="text-rose-400 text-xs font-semibold p-2 rounded-lg bg-rose-500/10 border border-rose-500/20">
+                      ⚠️ {loginError}
+                    </div>
+                  )}
+
+                  <button 
+                    type="submit"
+                    className="w-full py-2.5 rounded-xl bg-gradient-to-r from-accentBlue to-accentPurple text-white text-xs font-bold hover:opacity-90 transition-all flex items-center justify-center gap-1.5 shadow-lg shadow-accentBlue/20"
+                  >
+                    🔓 Entrar no Painel Seguro
+                  </button>
+                </form>
+              ) : (
+                /* OFFLINE ACCESS WITH LOCAL PIN */
+                <form onSubmit={handleLocalPasscodeLogin} className="space-y-4 relative">
+                  <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-300 text-[10px] leading-relaxed">
+                    ℹ️ <strong>Modo Offline Ativo (Dexie Local).</strong> Conecte-se à internet e configure seu Firebase para segurança na nuvem. Insira a senha local temporária para configurar ou gerenciar off-line (padrão: cllc2026).
+                  </div>
+
+                  <div>
+                    <label className="text-[10px] uppercase font-bold text-gray-400 tracking-wider block mb-1.5">Código de Acesso Local</label>
+                    <div className="relative">
+                      <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-500">
+                        <Settings className="w-4 h-4" />
+                      </span>
+                      <input 
+                        type="password"
+                        required
+                        value={localPasscode}
+                        onChange={(e) => setLocalPasscode(e.target.value)}
+                        placeholder="Senha offline"
+                        className="w-full pl-9 pr-3 py-2 rounded-xl bg-gray-950/80 border border-gray-800 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-accentBlue/50 transition-colors"
+                      />
+                    </div>
+                  </div>
+
+                  {loginError && (
+                    <div className="text-rose-400 text-xs font-semibold p-2 rounded-lg bg-rose-500/10 border border-rose-500/20">
+                      ⚠️ {loginError}
+                    </div>
+                  )}
+
+                  <button 
+                    type="submit"
+                    className="w-full py-2.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold transition-all flex items-center justify-center gap-1.5"
+                  >
+                    🔓 Acessar Painel Local
+                  </button>
+                </form>
+              )}
+
+              <button 
+                onClick={() => setActiveTab('estudante')}
+                className="w-full mt-4 py-2 text-center text-gray-400 hover:text-white transition-colors text-xs"
+              >
+                ← Voltar para Área do Estudante
+              </button>
+            </div>
+          ) : (
+            <div className="flex flex-col gap-8">
+              {/* TOP HEADER CONTROLS IN PANEL */}
+              <div className="flex justify-between items-center bg-gray-950/40 p-4 rounded-xl border border-gray-800/60" onClick={(e) => e.stopPropagation()}>
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                  <span className="text-[11px] text-gray-400 font-medium">Painel Autenticado ({isFirebaseActive() ? auth?.currentUser?.email : 'Modo Offline'})</span>
+                </div>
+                <button
+                  onClick={handleLogout}
+                  className="px-3.5 py-1.5 rounded-xl bg-rose-500/10 text-rose-400 text-[10px] font-bold border border-rose-500/20 hover:bg-rose-500 hover:text-white transition-all flex items-center gap-1"
+                >
+                  🔒 Bloquear Painel / Sair
+                </button>
+              </div>
             
             {/* --- CONFIGURAÇÕES DO FIREBASE (NUVEM DO PROFESSOR) --- */}
             <div className="glass-panel p-6 rounded-2xl">
@@ -1107,7 +1316,8 @@ export default function App() {
               )}
             </div>
 
-          </div>
+            </div>
+          )
         )}
 
       </main>

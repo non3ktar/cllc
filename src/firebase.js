@@ -1,8 +1,10 @@
 import { initializeApp, getApps, getApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
+import { getAuth } from 'firebase/auth';
 
 let firebaseApp = null;
 let firestoreDb = null;
+let auth = null;
 
 // 1. Tenta buscar credenciais das variáveis de ambiente (.env do Vite)
 const envConfig = {
@@ -37,13 +39,14 @@ if (activeConfig && activeConfig.apiKey && activeConfig.projectId) {
       firebaseApp = getApp();
     }
     firestoreDb = getFirestore(firebaseApp);
+    auth = getAuth(firebaseApp);
     console.log("🔥 Firebase inicializado com sucesso!");
   } catch (e) {
     console.error("❌ Falha ao inicializar o Firebase:", e);
   }
 }
 
-export { firebaseApp, firestoreDb };
+export { firebaseApp, firestoreDb, auth };
 
 // Função auxiliar para verificar se o Firebase está ativo e conectado
 export const isFirebaseActive = () => {
